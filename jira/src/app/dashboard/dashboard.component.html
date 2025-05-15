@@ -1,0 +1,17 @@
+<div class="container" *ngIf="visible">
+    <div class="rightArrow">
+        <i class="pi pi-angle-left" style="display: flex; align-items: center; background-color: white; border-radius: 50%; margin-top: 10px; cursor: pointer; margin-right: 10px;"></i>
+    </div>
+    <div class="card">
+        <p-tabMenu [model]="items" />
+    </div>
+</div>
+
+<div class="small-container" *ngIf="!visible">
+    <div class="rightArrow">
+        <i class="pi pi-angle-left" style="display: flex; align-items: center; background-color: white; border-radius: 50%; margin-top: 10px; cursor: pointer; margin-right: 10px;"></i>
+    </div>
+    <div class="card" style="padding: 10px;">
+        <p-tabMenu [model]="item"/>
+    </div>
+</div>

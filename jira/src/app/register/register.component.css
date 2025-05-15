@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+}
+
+.left-contianer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 50vw;
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 50vw;
+}
+
+::ng-deep .p-inputtext {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+    background-color: #f2f2f2;
+    border: none;
+}
+
+::ng-deep .p-password {
+    width: 100%;
+}
+
+::ng-deep .p-button {
+    margin-bottom: 10px;
+    width: 80%;
+}
+
+.error {
+    font-size: 10px;
+    color: red;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+.loginbutton {
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}

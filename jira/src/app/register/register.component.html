@@ -1,0 +1,41 @@
+<p-toast></p-toast>
+<div class="container">
+    <div class="left-contianer">
+        <p-image src="../../assets/logo.png" alt="logo"></p-image>
+        <h2 style="color: #3498db;">UCBOS JIRA BUILD MANAGEMENT</h2>
+        <p style="font-weight: bold;">Tool for better management teamwork collaboration</p>
+    </div>
+    <div class="right-container">
+        <h1>Create Account</h1>
+        <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" class="formgroup">
+            <label>Name</label><br>
+            <input type="text" pInputText name="name" [(ngModel)]="user.name" required #name="ngModel"/><br>
+            <div *ngIf="name.invalid && name.touched" class="error">* Name is required</div>
+            
+            <label>Email</label><br>
+            <input type="email" pInputText name="email" [(ngModel)]="user.email" required email #email="ngModel"/><br>
+            <div *ngIf="email.invalid && email.touched" class="error">* Enter a valid email</div>
+            
+            <label>Password</label><br>
+            <p-password [feedback]="false" name="password" [(ngModel)]="user.password" required minlength="8" pattern="^[^\\s]+$" type="password" #password="ngModel"/><br>
+            <div *ngIf="password.invalid && password.touched" class="error">
+                * Password must be at least 8 characters
+            </div>
+            
+            <label>Confirm Password</label><br>
+            <p-password [feedback]="false" name="confirmPassword" [(ngModel)]="user.confirmPassword" (ngModelChange)="checkPasswordsMatch()" required type="password" #confirmPassword="ngModel">
+</p-password>
+
+            <div *ngIf="confirmPassword.invalid && confirmPassword.touched" class="error">* Confirm Password is required</div>
+
+            <div *ngIf="passwordsDoNotMatch && confirmPassword.touched" class="error">
+                Passwords do not match
+            </div>
+            
+            <p-button type="submit" label="SignUp" [disabled]="registerForm.invalid || passwordsDoNotMatch"></p-button>
+            <div>
+                <p class="loginbutton" (click)="goTOLogin()">Login</p>
+            </div>
+        </form>
+    </div>
+</div>

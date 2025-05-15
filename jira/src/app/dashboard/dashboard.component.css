@@ -1,0 +1,41 @@
+.container {
+    width: 20%;
+    height: 100vh;
+    background-color: #3498db;
+}
+.small-container {
+    width: 5%;
+    height: 100vh;
+    background-color: #3498db;
+
+}
+::ng-deep .p-tabmenu .p-tabmenu-nav {
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+
+::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+    width: 100vw;
+    color: white;
+    padding: 1.25rem;
+    padding-left: 20%;
+    font-weight: 700;
+    border: none;
+    background-color: #3498db;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+    background-color: #ced4da;
+    border: none;
+    color: white;
+}
+
+
+.rightArrow {
+    display: flex;
+    justify-content: flex-end;
+    height: 30px;
+}
