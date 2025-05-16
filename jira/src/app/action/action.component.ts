@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./action.component.css']
 })
 export class ActionComponent {
+  checked: boolean = false;
 
+  
 }

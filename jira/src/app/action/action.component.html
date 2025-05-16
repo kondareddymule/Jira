@@ -1,1 +1,204 @@
+<app-header></app-header>
 <app-dashboard></app-dashboard>
+
+
+<body>
+    <div>
+        <div>
+        <input type="search"
+            class="search" />
+            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute; top: 14px; right: 20px;"></i>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 5px;">
+            <p>Select All</p>
+            <div class="horizontalline"></div>
+            <p-inputSwitch [(ngModel)]="checked"/>
+        </div>
+        <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px;">
+            <i class="pi pi-bars" style="font-size: 1rem; font-weight: bold;"></i>
+            <span>20</span>
+        </div>
+    </div>
+    <div>
+        <table class="table-container">
+            <thead>
+                <tr style="border-radius: 50px;">
+                    <th><p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" /></th>
+                    <th>
+                        <div class="row">
+                        <div>
+                            <span>Ticket Id</span>
+                        </div>
+                        <span>
+                        <div class="column">
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        </div>
+                        </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="row">
+                        <div>
+                            <span>Jira Type</span>
+                        </div>
+                        <span>
+                        <div class="column">
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        </div>
+                        </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="row">
+                        <div>
+                            <span>Description</span>
+                        </div>
+                        <span>
+                        <div class="column">
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        </div>
+                        </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="row">
+                        <div>
+                            <span>Assignee</span>
+                        </div>
+                        <span>
+                        <div class="column">
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        </div>
+                        </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="row">
+                        <div>
+                            <span>Status</span>
+                        </div>
+                        <span>
+                        <div class="column">
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        </div>
+                        </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="row">
+                        <div>
+                            <span>Estimated Time</span>
+                        </div>
+                        <span>
+                        <div class="column">
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        </div>
+                        </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="row">
+                        <div>
+                            <span>Story Point</span>
+                        </div>
+                        <span>
+                        <div class="column">
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        </div>
+                        </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="row">
+                        <div>
+                            <span>Release Tag</span>
+                        </div>
+                        <span>
+                        <div class="column">
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        </div>
+                        </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="row">
+                        <div>
+                            <span>Sprint</span>
+                        </div>
+                        <span>
+                        <div class="column">
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        </div>
+                        </span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" /></td>
+                    <td>12356</td>
+                    <td>Bug</td>
+                    <td>NA</td>
+                    <td>Vikram</td>
+                    <td>Inbuild</td>
+                    <td>3h</td>
+                    <td>4</td>
+                    <td>2024Q1B</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td><p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" /></td>
+                    <td>12356</td>
+                    <td>Bug</td>
+                    <td>NA</td>
+                    <td>Vikram</td>
+                    <td>Inbuild</td>
+                    <td>3h</td>
+                    <td>4</td>
+                    <td>2024Q1B</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td><p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" /></td>
+                    <td>12356</td>
+                    <td>Bug</td>
+                    <td>NA</td>
+                    <td>Vikram</td>
+                    <td>Inbuild</td>
+                    <td>3h</td>
+                    <td>4</td>
+                    <td>2024Q1B</td>
+                    <td>4</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="display: flex;">
+    <div class="buttons">
+        <p-button>Update Estimated Time</p-button>
+        <p-button>Update Release Tag</p-button>
+        <p-button>Update Story Point</p-button>
+        <p-button>Update Status for Build</p-button>
+    </div>
+    <div class="page">
+        <i class="pi pi-angle-left" style="font-size: 1rem"></i>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <i class="pi pi-angle-right" style="font-size: 1rem"></i>
+    </div>
+    </div>
+
+</body>

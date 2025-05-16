@@ -9,7 +9,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
@@ -26,6 +28,8 @@ import { HistoryComponent } from './history/history.component';
 import { SettingComponent } from './setting/setting.component';
 import { PermissionComponent } from './permission/permission.component';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -56,7 +60,10 @@ import { TabMenuModule } from 'primeng/tabmenu';
     ImageModule,
     InputTextModule,
     CheckboxModule,
-    TabMenuModule
+    TabMenuModule,
+    InputSwitchModule,
+    TableModule,
+    HttpClientModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

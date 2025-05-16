@@ -1,0 +1,97 @@
+body {
+    position: absolute;
+    top: 7vh;
+    left: 15vw;
+    margin: 20px;
+}
+
+.search {
+    position: relative;
+    border-radius: 6px;
+    width: 82vw;
+    background-color: white;
+    border: none;
+    height: 40px;
+    padding-left: 10px;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.table-container {
+    width: 82vw;
+    border-collapse: collapse;
+    margin: 20px 0;
+    text-align: left;
+    background-color: #ffffff;
+    overflow-x: scroll;
+}
+
+.table-container th, .table-container td {
+    padding: 6px 6px;
+}
+
+.table-container tr {
+    border: 4px solid #ecf0f1;
+    height: 50px;
+}
+
+.table-container tr:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.buttons {
+    position: fixed;
+    bottom: 0;
+    left: 15vw;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+::ng-deep .buttons .p-button {
+    height: 50px !important;
+    font-size: 12px;
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.page {
+    position: fixed;
+    bottom: 0;
+    right: 0vw;
+    padding: 10px 20px;
+    display: flex;
+    margin-bottom: 25px;
+    gap: 20px;
+}
+.row {
+    display: flex;
+    gap: 10px;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+}
+.line {
+    margin-left: 100px; 
+    display: flex; 
+    align-items: center
+}
+.horizontalline {
+    height: 30px;
+    width: 1px;
+    border: 1px solid grey;
+}
+
+::ng-deep .p-inputswitch .p-inputswitch-slider {
+    height: 20px;
+    margin-top: 6px;
+}

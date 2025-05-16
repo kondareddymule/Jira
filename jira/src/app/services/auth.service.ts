@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { from, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) {}
+  constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, private http: HttpClient) {}
 
   register(email: string, password: string, name: string): Observable<any> {
     return new Observable(observer => {
@@ -49,4 +50,10 @@ export class AuthService {
   get currentUser() {
     return this.afAuth.authState;
   }
+
+
+  getTickets() {
+    this.http.get('https://fir-84010-default-rtdb.firebaseio.com/JiraTickets').subscribe((ticket) => console.log(ticket))
+  }
+
 }

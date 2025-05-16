@@ -4,3 +4,8 @@
 @import "primeicons/primeicons.css";
 
 html body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+    background-color: #ecf0f1;
+    overflow: hidden;
+}
