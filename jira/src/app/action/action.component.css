@@ -1,97 +1,175 @@
-body {
-    position: absolute;
-    top: 7vh;
-    left: 15vw;
-    margin: 20px;
+.container {
+  margin: 20px;
+  padding-right: 40px;
 }
 
 .search {
-    position: relative;
-    border-radius: 6px;
-    width: 82vw;
-    background-color: white;
-    border: none;
-    height: 40px;
-    padding-left: 10px;
+  position: relative;
+  border-radius: 6px;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  height: 40px;
+  padding-left: 10px;
+  box-sizing: border-box;
 }
 
 input[type="search"]::-webkit-search-cancel-button {
-    display: none;
-    -webkit-appearance: none;
+  display: none;
+  -webkit-appearance: none;
+}
+
+
+.table-container thead th {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px 20px 0 0;
 }
 
 .table-container {
-    width: 82vw;
-    border-collapse: collapse;
-    margin: 20px 0;
-    text-align: left;
-    background-color: #ffffff;
-    overflow-x: scroll;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
 }
 
-.table-container th, .table-container td {
-    padding: 6px 6px;
-}
-
-.table-container tr {
-    border: 4px solid #ecf0f1;
-    height: 50px;
+.table-container th,
+.table-container td {
+  padding: 12px 10px;
+  border-bottom: 4px solid #e0e0e0;
+  font-size: 14px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .table-container tr:hover {
-    background-color: #f2f2f2;
-    cursor: pointer;
+  background-color: #f9f9f9;
+  cursor: pointer;
 }
 
+
+
+
 .buttons {
-    position: fixed;
-    bottom: 0;
-    left: 15vw;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 20px;
+  position: fixed;
+  bottom: 10px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  z-index: 1000;
 }
 
 ::ng-deep .buttons .p-button {
-    height: 50px !important;
-    font-size: 12px;
-    width: 200px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    border-radius: 5px;
+  height: 50px !important;
+  font-size: 14px;
+  width: 200px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+
 .page {
-    position: fixed;
-    bottom: 0;
-    right: 0vw;
-    padding: 10px 20px;
-    display: flex;
-    margin-bottom: 25px;
-    gap: 20px;
+  position: fixed;
+  bottom: 0;
+  right: 40px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #fff;
+  margin-bottom: 25px;
+  z-index: 1000;
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
 }
+
 .row {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
+
 .column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-.line {
-    margin-left: 100px; 
-    display: flex; 
-    align-items: center
-}
+
 .horizontalline {
-    height: 30px;
-    width: 1px;
-    border: 1px solid grey;
+  height: 25px;
+  width: 1px;
+  border: 1px solid grey;
 }
 
 ::ng-deep .p-inputswitch .p-inputswitch-slider {
-    height: 20px;
-    margin-top: 6px;
+  height: 20px;
+  width: 40px;
+  margin-top: 6px;
+}
+
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px;
+}
+
+.searchIcon {
+  position: relative;
+  border-radius: 5px;
+  width: 100px;
+  background-color: white;
+  border: 1px solid #ccc;
+  height: 30px;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+.search-chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 6px;
+  min-height: 40px;
+  background-color: #fff;
+  cursor: text;
+}
+
+.search-chip {
+  background-color: #ecf0f1;
+  color: black;
+  padding: 4px 10px;
+  margin: 2px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.search-chip i {
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  padding: 6px;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 120px;
 }

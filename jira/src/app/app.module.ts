@@ -30,6 +30,8 @@ import { PermissionComponent } from './permission/permission.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { BlankpageComponent } from './blankpage/blankpage.component';
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import { TableModule } from 'primeng/table';
     DashboardComponent,
     HistoryComponent,
     SettingComponent,
-    PermissionComponent
+    PermissionComponent,
+    BlankpageComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ import { TableModule } from 'primeng/table';
     TabMenuModule,
     InputSwitchModule,
     TableModule,
-    HttpClientModule
+    HttpClientModule,
+    TooltipModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

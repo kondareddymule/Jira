@@ -2,7 +2,7 @@
 <app-dashboard></app-dashboard>
 
 
-<body>
+<div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'" class="container">
     <div>
         <div style="display: flex; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 5px;">
@@ -14,6 +14,8 @@
             <span>20</span>
         </div>
     </div>
+        
+    <div class="table">
         <table class="table-container">
             <thead>
                 <tr>
@@ -47,23 +49,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>16549865</td>
-                    <td>25/10/2024</td>
-                    <td><a href="https://www.UCBOS.com" target="_blank">UCBOS</a></td>
-                </tr>
-                <tr>
-                    <td>16549865</td>
-                    <td>25/10/2024</td>
-                    <td><a href="https://www.UCBOS.com" target="_blank">UCBOS</a></td>
-                </tr>
-                <tr>
-                    <td>16549865</td>
-                    <td>25/10/2024</td>
-                    <td><a href="https://www.UCBOS.com" target="_blank">UCBOS</a></td>
+                <tr *ngFor="let ticket of tickets">
+                    <td>{{ticket.ticketId}}</td>
+                    <td>{{ticket.status}}</td>
+                    <td><a [routerLink]="['/ticket', ticket.ticketId]" target="_blank" >{{ticket.ticketId}}</a></td>
                 </tr>
             </tbody>
         </table>
+    </div>
         <div class="page">
         <i class="pi pi-angle-left" style="font-size: 1rem"></i>
         <span>1</span>
@@ -72,4 +65,4 @@
         <i class="pi pi-angle-right" style="font-size: 1rem"></i>
     </div>
     </div>
-</body>
+</div >

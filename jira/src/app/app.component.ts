@@ -8,4 +8,5 @@ import { initializeApp } from '@angular/fire/app';
 })
 export class AppComponent {
   title = 'jira';
+  
 }

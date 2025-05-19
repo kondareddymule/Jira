@@ -1,0 +1,24 @@
+.container {
+    background-color: #ffffff;
+}
+
+.container {
+    display: flex;
+}
+
+.left-contianer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 50vw;
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 50vw;
+}

@@ -1,31 +1,40 @@
 <app-header></app-header>
 <app-dashboard></app-dashboard>
 
-
-<body>
-    <div>
-        <div>
-        <input type="search"
-            class="search" />
-            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute; top: 14px; right: 20px;"></i>
-        </div>
+<div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'" class="container">
+  <div>
+        <div class="search-chip-container" (click)="inputRef.focus()">
+            <span *ngFor="let term of searchTerms; let i = index" class="search-chip">
+                {{ term }}
+                <i class="pi pi-times" (click)="removeSearchTerm(i)"></i>
+            </span>
+            <input
+                #inputRef
+                type="text"
+                class="search-input"
+                [(ngModel)]="currentInput"
+                (keydown)="onKeyDown($event)"
+                (paste)="onPaste($event)"
+            />
+            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute; top: 14px; right: 60px;"></i>
+    </div>
     </div>
     <div style="display: flex; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 5px;">
             <p>Select All</p>
             <div class="horizontalline"></div>
-            <p-inputSwitch [(ngModel)]="checked"/>
+            <p-inputSwitch [(ngModel)]="checked" (click)="change()"/>
         </div>
         <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px;">
             <i class="pi pi-bars" style="font-size: 1rem; font-weight: bold;"></i>
             <span>20</span>
         </div>
     </div>
-    <div>
+    <div class="table">
         <table class="table-container">
             <thead>
-                <tr style="border-radius: 50px;">
-                    <th><p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" /></th>
+                <tr>
+                    <th><p-checkbox  [binary]="true" inputId="binary" /></th>
                     <th>
                         <div class="row">
                         <div>
@@ -37,6 +46,11 @@
                             <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
                         </div>
                         </span>
+                        </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" />
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
                         </div>
                     </th>
                     <th>
@@ -51,6 +65,11 @@
                         </div>
                         </span>
                         </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" />
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
+                        </div>
                     </th>
                     <th>
                         <div class="row">
@@ -63,6 +82,11 @@
                             <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
                         </div>
                         </span>
+                        </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" />
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
                         </div>
                     </th>
                     <th>
@@ -77,6 +101,11 @@
                         </div>
                         </span>
                         </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" />
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
+                        </div>
                     </th>
                     <th>
                         <div class="row">
@@ -89,6 +118,11 @@
                             <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
                         </div>
                         </span>
+                        </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" />
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
                         </div>
                     </th>
                     <th>
@@ -103,6 +137,11 @@
                         </div>
                         </span>
                         </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" />
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
+                        </div>
                     </th>
                     <th>
                         <div class="row">
@@ -115,6 +154,11 @@
                             <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
                         </div>
                         </span>
+                        </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" />
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
                         </div>
                     </th>
                     <th>
@@ -129,6 +173,11 @@
                         </div>
                         </span>
                         </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" />
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
+                        </div>
                     </th>
                     <th>
                         <div class="row">
@@ -142,48 +191,29 @@
                         </div>
                         </span>
                         </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" />
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
+                        </div>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" /></td>
-                    <td>12356</td>
-                    <td>Bug</td>
-                    <td>NA</td>
-                    <td>Vikram</td>
-                    <td>Inbuild</td>
-                    <td>3h</td>
-                    <td>4</td>
-                    <td>2024Q1B</td>
-                    <td>4</td>
+                <tr *ngFor="let ticket of pagedTickets">
+                  <td><p-checkbox [binary]="true" inputId="binary" /></td>
+                  <td pTooltip="{{ ticket.ticketId }}" tooltipPosition="bottom">{{ ticket.ticketId }}</td>
+                  <td pTooltip="{{ ticket.jiraType }}" tooltipPosition="bottom">{{ ticket.jiraType }}</td>
+                  <td pTooltip="{{ ticket.description }}" class="text-ellipsis" tooltipPosition="bottom">{{ ticket.description }}</td>
+                  <td pTooltip="{{ ticket.assignee }}" tooltipPosition="bottom">{{ ticket.assignee }}</td>
+                  <td pTooltip="{{ ticket.status }}" tooltipPosition="bottom"><span style="background-color: green; padding: 8px; border-radius: 20px;">{{ ticket.status }}</span></td>
+                  <td pTooltip="{{ ticket.estimateTime }}" tooltipPosition="bottom">{{ ticket.estimateTime }}</td>
+                  <td pTooltip="{{ ticket.storyPoint }}" tooltipPosition="bottom">{{ ticket.storyPoint }}</td>
+                  <td pTooltip="{{ ticket.releaseTag }}" tooltipPosition="bottom">{{ ticket.releaseTag }}</td>
+                  <td pTooltip="{{ ticket.sprint }}" tooltipPosition="bottom">{{ ticket.sprint }}</td>
                 </tr>
-                <tr>
-                    <td><p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" /></td>
-                    <td>12356</td>
-                    <td>Bug</td>
-                    <td>NA</td>
-                    <td>Vikram</td>
-                    <td>Inbuild</td>
-                    <td>3h</td>
-                    <td>4</td>
-                    <td>2024Q1B</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td><p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" /></td>
-                    <td>12356</td>
-                    <td>Bug</td>
-                    <td>NA</td>
-                    <td>Vikram</td>
-                    <td>Inbuild</td>
-                    <td>3h</td>
-                    <td>4</td>
-                    <td>2024Q1B</td>
-                    <td>4</td>
-                </tr>
-            </tbody>
-        </table>
+          </tbody>
+          </table>
     </div>
     <div style="display: flex;">
     <div class="buttons">
@@ -200,5 +230,4 @@
         <i class="pi pi-angle-right" style="font-size: 1rem"></i>
     </div>
     </div>
-
-</body>
+</div>

@@ -2,7 +2,7 @@
 <app-dashboard></app-dashboard>
 
 
-<body>
+<div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'">
     <div>
         <table class="table-container">
             <thead>
@@ -70,37 +70,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Reddy</td>
-                    <td>Reedy.com</td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>Reddy</td>
-                    <td>Reedy.com</td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>Reddy</td>
-                    <td>Reedy.com</td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox  [binary]="true" inputId="binary" /></td>
-                    <td>Active</td>
+                <tr *ngFor="let user of users">
+                    <td>{{user.name}}</td>
+                    <td>{{user.emailId}}</td>
+                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
+                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
+                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
+                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
+                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
+                    <td>{{user.status}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
-</body>
+</div>

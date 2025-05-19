@@ -1,0 +1,22 @@
+<div class="container">
+<p-toast></p-toast>
+<div class="container">
+    <div class="left-contianer">
+        <p-image src="../../assets/logo.png" alt="logo"></p-image>
+        <h2 style="color: #3498db;">UCBOS JIRA BUILD MANAGEMENT</h2>
+        <p style="font-weight: bold;">Tool for better management teamwork collaboration</p>
+    </div>
+    <div class="right-container" *ngFor="let ticket of tickets">
+        <h1>Ticket Details</h1>
+        <p><strong>TicketId:</strong> {{ ticket.ticketId }}</p>
+        <p><strong>JiraType:</strong> {{ ticket.jiraType}}</p>
+        <p><strong>Description:</strong> {{ ticket.description }}</p>
+        <p><strong>Assignee:</strong> {{ ticket.assignee }}</p>
+        <p><strong>Status:</strong> {{ ticket.status }}</p>
+        <p><strong>EstimateTime:</strong> {{ ticket.estimateTime }}</p>
+        <p><strong>Story Point:</strong> {{ ticket.storyPoint }}</p>
+        <p><strong>ReleaseTag:</strong> {{ ticket.releaseTag }}</p>
+        <p><strong>Sprint:</strong> {{ ticket.sprint }}</p>
+    </div>
+</div>
+</div>

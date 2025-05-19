@@ -9,3 +9,19 @@ body {
     background-color: #ecf0f1;
     overflow: hidden;
 }
+
+.dashboard-expanded {
+  position: absolute;
+  left: 15vw;
+  top: 7vh;
+  width: calc(100vw - 15vw);
+  margin-left: 20px;
+}
+
+.dashboard-collapsed {
+  position: absolute;
+  left: 5vw;
+  top: 7vh;
+  width: calc(100vw - 5vw);
+  margin-left: 20px;
+}

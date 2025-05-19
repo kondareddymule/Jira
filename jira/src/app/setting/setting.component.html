@@ -2,11 +2,11 @@
 <app-dashboard></app-dashboard>
 
 
-<body>
+<div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'">
     <div>
         <p>Authorization Token</p>
         <input type="text"  pInputText />
         <p>Base URL</p>
         <input type="text"  pInputText />
     </div>
-</body>
+</div>
