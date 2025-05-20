@@ -30,10 +30,13 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .table {
   max-height: 500px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: auto;
   border: 1px solid #e0e0e0;
   border-radius: 20px 20px 0 0;
+}
+
+.table::-webkit-scrollbar {
+  display: none;
 }
 
 .table-container {
@@ -54,12 +57,22 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .table-container tr:hover {
-  background-color: #f9f9f9;
+  background-color: #ecf0f1;
+}
+
+.table-container td:hover {
+  background-color: #ecf0f1;
   cursor: pointer;
 }
 
 
+.pi-search {
+  color: #3B82F6
+}
 
+.pi-sort-up-fill, .pi-sort-down-fill {
+  cursor: pointer;
+}
 
 .buttons {
   position: fixed;
@@ -81,20 +94,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 
-.page {
-  position: fixed;
-  bottom: 0;
-  right: 40px;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background-color: #fff;
-  margin-bottom: 25px;
-  z-index: 1000;
-  box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
-}
-
 .row {
   display: flex;
   align-items: center;
@@ -113,17 +112,33 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 ::ng-deep .p-inputswitch .p-inputswitch-slider {
-  height: 20px;
-  width: 40px;
-  margin-top: 6px;
+    height: 12px;
+    margin-top: 10px;
+    background: #4d4747;
+    width: 25px;
 }
+
+::ng-deep .p-inputswitch .p-inputswitch-slider:before {
+  background: #ffffff;
+  width: 0.7rem;
+  height: 0.7rem;
+  left: -0.1rem;
+  margin-top: -0.4rem;
+  border-radius: 50%;
+  transition-duration: 0.2s;
+}
+
+::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: grey;
+}
+
 
 
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 150px;
+  max-width: 100px;
 }
 
 .searchIcon {
@@ -150,6 +165,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .search-chip {
+  border: 1px solid black;
   background-color: #ecf0f1;
   color: black;
   padding: 4px 10px;
@@ -161,8 +177,13 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .search-chip i {
+  font-size: 8px;
   margin-left: 6px;
   cursor: pointer;
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 2px;
+  background-color: #ffffff;
 }
 
 .search-input {
@@ -173,3 +194,19 @@ input[type="search"]::-webkit-search-cancel-button {
   flex: 1;
   min-width: 120px;
 }
+
+.page {
+  position: fixed;
+  bottom: 0;
+  right: 40px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #fff;
+  margin-bottom: 25px;
+  z-index: 1000;
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+}
+
+

@@ -1,13 +1,12 @@
 <div class="container">
-    <div class="logo-container">
-        <p-image src="../../assets/logo.png" alt="logo" width="50" height="50"></p-image>
+  <div class="logo-container">
+    <p-image src="../../assets/logo.png" alt="logo" width="50" height="50"></p-image>
+  </div>
+  <div class="right-container">
+    <span>{{userName }}</span>
+    <img src="../../assets/Account.jpg" alt="profile" width="50" height="50" class="profile" />
+    <div >
+      <button (click)="logout()" class="logout">LOGOUT</button>
     </div>
-    <div class="right-container">
-        <span>Raksha</span>
-        <img src="../../assets/Account.jpg" alt="profile" width="50" height="50" class="profile" />
-        <div>
-            <p-button >LOGOUT</p-button>
-        </div>
-        
-    </div>
+  </div>
 </div>

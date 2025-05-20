@@ -39,9 +39,6 @@ export class LoginComponent {
     this.router.navigate(['/register'])
   }
 
-  ngOnInit() {
-    this.authService.getTickets()
-  }
 
 }
 

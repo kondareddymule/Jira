@@ -46,14 +46,22 @@ export class AuthService {
   logout(): Observable<void> {
     return from(this.afAuth.signOut());
   }
+  getUserData(uid: string): Observable<any> {
+  return this.db.object(`users/${uid}`).valueChanges();
+  } 
+
 
   get currentUser() {
     return this.afAuth.authState;
   }
 
+  isAuthenticated(): Promise<boolean> {
+      return new Promise(resolve => {
+        this.afAuth.authState.subscribe(user => {
+          resolve(!!user);
+        });
+      });
+    }
 
-  getTickets() {
-    this.http.get('https://fir-84010-default-rtdb.firebaseio.com/JiraTickets').subscribe((ticket) => console.log(ticket))
-  }
 
 }

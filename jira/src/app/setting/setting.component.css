@@ -4,3 +4,13 @@ body {
     left: 15vw;
     margin: 20px;
 }
+
+.inputfield {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 20%;
+    background-color: #ffffff;
+    border: none;
+    height: 40px;
+    border-radius: 6px;
+}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, forkJoin, from } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class JiraService {

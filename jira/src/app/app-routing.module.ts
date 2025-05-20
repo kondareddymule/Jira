@@ -7,16 +7,55 @@ import { HistoryComponent } from './history/history.component';
 import { PermissionComponent } from './permission/permission.component';
 import { SettingComponent } from './setting/setting.component';
 import { BlankpageComponent } from './blankpage/blankpage.component';
+import { AuthGuard } from './guards/auth.guard';
+import { LoginuserGuard } from './guards/loginuser.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  {path: 'action', component: ActionComponent},
-  {path: 'history', component: HistoryComponent},
-  {path: 'permission', component: PermissionComponent},
-  {path: 'setting', component: SettingComponent},
-  { path: 'ticket/:id', component: BlankpageComponent }, 
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  {
+    path: '',
+    redirectTo: 'action',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [LoginuserGuard]
+  },
+
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [LoginuserGuard]
+  },
+  {
+    path: 'action',
+    component: ActionComponent,
+    canActivate: [AuthGuard],
+  },
+  
+  {
+    path: 'history',
+    component: HistoryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'permission',
+    component: PermissionComponent,
+    canActivate: [AuthGuard],
+    data: { userType: 'Admin' }
+  },
+  {
+    path: 'setting',
+    component: SettingComponent,
+    canActivate: [AuthGuard]
+  },
+  {path: 'ticket/:id',
+    component: BlankpageComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
+  }
 ];
 
 @NgModule({

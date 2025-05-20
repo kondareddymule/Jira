@@ -7,7 +7,7 @@
         <div style="display: flex; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 5px;">
             <div class="horizontalline"></div>
-            <p-inputSwitch />
+            <p-inputSwitch [(ngModel)]="checked" (click)="change()"/>
         </div>
         <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px;">
             <i class="pi pi-bars" style="font-size: 1rem; font-weight: bold;"></i>
@@ -26,10 +26,15 @@
                     </div>
                     <span>
                     <div class="column">
-                        <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
-                        <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                        <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'ticketId' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('ticketId', 'asc')"></i>
+                        <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'ticketId' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('ticketId', 'desc')"></i>
                     </div>
                     </span>
+                    </div>
+                    <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                    <input type="search"
+                        class="searchIcon" [(ngModel)]="columnSearch.ticketId" (ngModelChange)="filterTickets()"/>
+                        <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
                     </div>
                 </th>
                     <th>
@@ -39,17 +44,22 @@
                         </div>
                         <span>
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
+                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'status' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('status', 'asc')"></i>
+                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'status' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('status', 'desc')"></i>
                         </div>
                         </span>
+                        </div>
+                        <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
+                        <input type="search"
+                            class="searchIcon" [(ngModel)]="columnSearch.status" (ngModelChange)="filterTickets()"/>
+                            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
                         </div>
                     </th>
                 <th>Details</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let ticket of tickets">
+                <tr *ngFor="let ticket of filteredTickets">
                     <td>{{ticket.ticketId}}</td>
                     <td>{{ticket.status}}</td>
                     <td><a [routerLink]="['/ticket', ticket.ticketId]" target="_blank" >{{ticket.ticketId}}</a></td>
