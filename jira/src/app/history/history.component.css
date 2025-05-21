@@ -41,8 +41,7 @@
 }
 
 .table-container tr:hover {
-  background-color: #f9f9f9;
-  
+  background-color: #ecf0f1;
 }
 
 .table-container td:hover {
@@ -87,14 +86,17 @@
   background: #ffffff;
   width: 0.7rem;
   height: 0.7rem;
-  left: -0.1rem;
-  margin-top: -0.4rem;
+  left: 0.1rem;
+  margin-top: -0.35rem;
   border-radius: 50%;
   transition-duration: 0.2s;
 }
 
 ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
   background: grey;
+}
+::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
+  left: -8px;
 }
 
 .searchIcon {

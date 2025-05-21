@@ -60,9 +60,9 @@
             </thead>
             <tbody>
                 <tr *ngFor="let ticket of filteredTickets">
-                    <td>{{ticket.ticketId}}</td>
-                    <td>{{ticket.status}}</td>
-                    <td><a [routerLink]="['/ticket', ticket.ticketId]" target="_blank" >{{ticket.ticketId}}</a></td>
+                    <td>{{ticket.sequence}}</td>
+                    <td>{{ticket.timestamp | date}}</td>
+                    <td><a [routerLink]="['/ticket', ticket.tickets[0]]" target="_blank" >{{ticket.tickets[0]}}</a></td>
                 </tr>
             </tbody>
         </table>

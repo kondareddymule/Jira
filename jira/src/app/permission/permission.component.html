@@ -2,8 +2,8 @@
 <app-dashboard></app-dashboard>
 
 
-<div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'">
-    <div>
+<div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'" class="container">
+    <div class="table">
         <table class="table-container">
             <thead>
                 <tr>
@@ -33,22 +33,6 @@
                         </span>
                         </div>
                     </th>
-                    <!-- <th>
-                        <div style="display: flex; justify-content: center; flex-direction: column;">
-                        <div style="display: flex; justify-content: center;">
-                            <span>Permissions</span>
-                        </div>
-                        <div style="display: flex;">
-                            <span>Update Estimate Time</span>
-                            <span>Update Release Tag</span>
-                            <span>Update Story Point</span>
-                            <span>Update Status for Build</span>
-                            <span>Build History</span>
-                        </div>
-                        </div>
-                    </th> -->
-                    
-                    
                     <th>Update Estimate Time</th>
                     <th>Update Release Tag</th>
                     <th>Update Story Point</th>
@@ -71,16 +55,17 @@
             </thead>
             <tbody>
                 <tr *ngFor="let user of users">
-                    <td>{{user.name}}</td>
-                    <td>{{user.emailId}}</td>
-                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
-                    <td><p-checkbox [binary]="true" inputId="binary" /></td>
+                    <td pTooltip="{{ user.name }}" tooltipPosition="bottom" class="text-ellipsis">{{user.name}}</td>
+                    <td pTooltip="{{ user.emailId }}" tooltipPosition="bottom" class="text-ellipsis">{{user.emailId}}</td>
+                    <td><p-checkbox [binary]="true" [(ngModel)]="user.permissionMap.UpdateEstimateTime" /></td>
+                    <td><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.UpdateReleaseTag" /></td>
+                    <td><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.UpdateStatusForBuild" /></td>
+                    <td><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.UpdateStoryPoint" /></td>
+                    <td><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.BuildHistory" /></td>
                     <td>{{user.status}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+

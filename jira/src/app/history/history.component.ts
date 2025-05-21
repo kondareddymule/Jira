@@ -30,10 +30,9 @@ export class HistoryComponent {
         this.sidebarVisible = value;
       });
 
-      this.jiraTickets.getAllTickets().subscribe((ticket) => {
-        let result = ticket.filter((item) => item.status === "Deployed")
-        this.tickets = result
-        this.filteredTickets = result;
+      this.jiraTickets.getAllBuildHistory().subscribe((ticket) => {
+        this.tickets = ticket
+        this.filteredTickets = ticket;
       })
     }
 

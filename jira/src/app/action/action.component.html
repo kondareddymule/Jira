@@ -1,6 +1,8 @@
 <app-header></app-header>
 <app-dashboard></app-dashboard>
 
+<p-toast></p-toast>
+
 <div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'" class="container">
   <div>
         <div class="search-chip-container" (click)="inputRef.focus()">
@@ -41,8 +43,6 @@
                         </p-checkbox>
 
                     </th>
-
-
                     <th>
                         <div class="row">
                         <div>
@@ -217,32 +217,110 @@
                     </p-checkbox>
 
                   </td>
-                  <td pTooltip="{{ ticket.ticketId }}" tooltipPosition="bottom">{{ ticket.ticketId }}</td>
-                  <td pTooltip="{{ ticket.jiraType }}" tooltipPosition="bottom">{{ ticket.jiraType }}</td>
+                  <td>{{ ticket.ticketId }}</td>
+                  <td>{{ ticket.jiraType }}</td>
                   <td pTooltip="{{ ticket.description }}" class="text-ellipsis" tooltipPosition="bottom">{{ ticket.description }}</td>
                   <td pTooltip="{{ ticket.assignee }}" tooltipPosition="bottom">{{ ticket.assignee }}</td>
-                  <td pTooltip="{{ ticket.status }}" tooltipPosition="bottom"><span [ngStyle]="{ background: ticket.status === 'Deployed' ? '#f2f2f2': '#CFEBCD'}" style="padding: 5px; border-radius: 10px; display: inline-block; width: 80px; text-align: center;">{{ ticket.status }}</span></td>
-                  <td pTooltip="{{ ticket.estimateTime }}" tooltipPosition="bottom">{{ ticket.estimateTime }}</td>
-                  <td pTooltip="{{ ticket.storyPoint }}" tooltipPosition="bottom">{{ ticket.storyPoint }}</td>
-                  <td pTooltip="{{ ticket.releaseTag }}" tooltipPosition="bottom">{{ ticket.releaseTag }}</td>
-                  <td pTooltip="{{ ticket.sprint }}" tooltipPosition="bottom">{{ ticket.sprint }}</td>
+                  <td><span [ngStyle]="{ background: ticket.status === 'Deployed' ? '#f2f2f2': '#CFEBCD'}" style="padding: 5px; border-radius: 10px; display: inline-block; width: 80px; text-align: center;">{{ ticket.status }}</span></td>
+                  <td *ngIf="editingEstimateTime && selectedTickets.includes(ticket)">
+                    <input
+                        type="number"
+                        [(ngModel)]="getEditedTicket(ticket.ticketId).estimateTime"
+                        class="time-input"
+                    />
+                    </td>
+
+                    <td *ngIf="!editingEstimateTime || !selectedTickets.includes(ticket)">
+                    {{ ticket.estimateTime }}h
+                  </td>
+                  <!-- <td pTooltip="{{ ticket.estimateTime }}" tooltipPosition="bottom">{{ ticket.estimateTime }}h</td> -->
+                  <td>{{ ticket.storyPoint }}</td>
+                  <td pTooltip="{{ ticket.releaseTag }}" tooltipPosition="bottom" class="text-ellipsis">{{ ticket.releaseTag }}</td>
+                  <td >{{ ticket.sprint }}</td>
                 </tr>
           </tbody>
           </table>
     </div>
     <div style="display: flex;">
     <div class="buttons">
-        <p-button>Update Estimated Time</p-button>
-        <p-button>Update Release Tag</p-button>
-        <p-button>Update Story Point</p-button>
-        <p-button>Update Status for Build</p-button>
+            <!-- <button
+                (click)="setActive('estimatedTime')"
+                [ngStyle]="getButtonStyle('estimatedTime')">
+                Update Estimated Time
+            </button> -->
+
+            <button
+            *ngIf="!editingEstimateTime && permissionMap?.['UpdateEstimateTime']"
+            (click)="enableEstimateEdit()">
+             Update Estimated Time
+            </button>
+
+            <div style="display: flex; justify-content: flex-end;" *ngIf="editingEstimateTime && permissionMap?.['UpdateEstimateTime']">
+            <button (click)="saveEstimateEdit()">Save</button>
+            <button (click)="cancelEstimateEdit()">Cancel</button>
+            </div>
+
+            <button
+            *ngIf="permissionMap?.['UpdateReleaseTag']"
+            (click)="setActive('releaseTag'); openReleaseDialog()"
+            [ngStyle]="getButtonStyle('releaseTag')">
+            Update Release Tag
+            </button>
+
+            <button
+            *ngIf="permissionMap?.['UpdateStoryPoint']"
+            (click)="setActive('storyPoint'); updateStoryPoint = true"
+            [ngStyle]="getButtonStyle('storyPoint')">
+            Update Story Point
+            </button>
+
+            <button
+            *ngIf="permissionMap?.['UpdateStatusForBuild']"
+            (click)="setActive('status'); updateBuild = true"
+            [ngStyle]="getButtonStyle('status')">
+            Update Status for Build
+            </button>
+
+
+        </div>
+        <div class="page">
+            <i class="pi pi-angle-left" style="font-size: 1rem"></i>
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <i class="pi pi-angle-right" style="font-size: 1rem"></i>
+        </div>
+        </div>
     </div>
-    <div class="page">
-        <i class="pi pi-angle-left" style="font-size: 1rem"></i>
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-        <i class="pi pi-angle-right" style="font-size: 1rem"></i>
+
+
+<p-dialog [modal]="true" [(visible)]="updateBuild" [style]="{ width: '24rem' }" [resizable]="false" [draggable]="false">
+    <div style="display: flex; justify-content: center; ">
+        <i class="pi pi-question"></i>
     </div>
+    <p style="text-align: center;">Do you want to Update Status for Build?..</p>
+    <div class="builtUpdate">
+        <button class="cancel" (click)="cancelBuild()">No</button>
+        <button class="save" (click)="updateBuildStatus()">Yes</button>
     </div>
-</div>
+</p-dialog>
+
+<p-dialog [modal]="true" [(visible)]="showReleaseDialog" [style]="{ width: '24rem' }" [resizable]="false" [draggable]="false">
+    <p>Update Release Tag Value</p>
+    <input class="tag-input" [(ngModel)]="releaseTagValue"/>
+    <div class="builtUpdate">
+        <button class="cancel" (click)="cancelBuild()">Cancle</button>
+        <button class="save" [ngStyle]="{ background: releaseTagValue.length > 0 ? '#3B82F6': 'grey'}" (click)="confirmReleaseTag()" [disabled]="!releaseTagValue.length">Proceed</button>
+    </div>
+</p-dialog>
+
+<p-dialog [modal]="true" [(visible)]="updateStoryPoint" [style]="{ width: '24rem' }" [resizable]="false" [draggable]="false">
+    <div style="display: flex; justify-content: center; ">
+        <i class="pi pi-question"></i>
+    </div>
+    <p style="text-align: center;">Do you want to Update Story Point?..</p>
+    <div class="builtUpdate">
+        <button class="cancel" (click)="cancelBuild()">No</button>
+        <button class="save" (click)=updateStoryPoints()>Yes</button>
+    </div>
+</p-dialog>

@@ -9,6 +9,7 @@ import { SettingComponent } from './setting/setting.component';
 import { BlankpageComponent } from './blankpage/blankpage.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginuserGuard } from './guards/loginuser.guard';
+import { PermissionGuard } from './guards/permission.guard';
 
 const routes: Routes = [
   {
@@ -36,7 +37,8 @@ const routes: Routes = [
   {
     path: 'history',
     component: HistoryComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'BuildHistory' }
   },
   {
     path: 'permission',

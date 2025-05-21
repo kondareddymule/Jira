@@ -32,6 +32,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BlankpageComponent } from './blankpage/blankpage.component';
+import { DialogModule } from 'primeng/dialog';
+import { DatePipe } from './pipe/date.pipe';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { BlankpageComponent } from './blankpage/blankpage.component';
     HistoryComponent,
     SettingComponent,
     PermissionComponent,
-    BlankpageComponent
+    BlankpageComponent,
+    DatePipe
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,8 @@ import { BlankpageComponent } from './blankpage/blankpage.component';
     InputSwitchModule,
     TableModule,
     HttpClientModule,
-    TooltipModule
+    TooltipModule,
+    DialogModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

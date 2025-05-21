@@ -9,6 +9,7 @@ import { JiraService } from '../services/jira.service';
 })
 export class PermissionComponent {
     sidebarVisible: boolean = true;
+    checked: boolean = false;
     users : any[] = [];
   
     constructor(private layoutService: LayoutService, private Users: JiraService) {}
@@ -17,7 +18,8 @@ export class PermissionComponent {
       this.layoutService.sidebarVisible$.subscribe(value => {
         this.sidebarVisible = value;
       });
-
-      //this.Users.getAllUser().subscribe((user) => this.users = user)
+      this.Users.getAllUser().subscribe((user) => {
+        this.users = user
+      })
     }
 }
