@@ -39,3 +39,9 @@
     justify-content: flex-end;
     height: 30px;
 }
+
+::ng-deep .custom-tab-padding .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link .p-menuitem-icon {
+  padding-left: 40%;
+}
+
+

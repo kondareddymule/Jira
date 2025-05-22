@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { JiraService } from '../services/jira.service';
 import { LayoutService } from '../services/layout.service';
 import { MessageService } from 'primeng/api';
@@ -13,6 +13,8 @@ export class ActionComponent {
 
 
   message: MessageService = inject(MessageService)
+  @ViewChild('menuDropdown', { static: false }) menuDropdown!: ElementRef;
+  @ViewChild('menuToggle', { static: false }) menuToggle!: ElementRef;
 
   checked: boolean = false
   sidebarVisible: boolean = true;
@@ -40,6 +42,8 @@ export class ActionComponent {
   updateStoryPoint: boolean = false
 
   builtUpdateInput: string = ""
+
+  showpage: boolean = false
 
   permissionMap: { [key: string]: boolean } = {};
 
@@ -84,10 +88,6 @@ export class ActionComponent {
   });
   }
 
-    updatePagedTickets(): void {
-      const start = (this.currentPage - 1) * this.pageSize;
-      this.pagedTickets = this.filteredTickets.slice(start, start + this.pageSize);
-    }
 
     change() {
       this.searchIcon = !this.searchIcon;
@@ -128,58 +128,73 @@ export class ActionComponent {
     sprint?: string;
   } = {};
 
+      toggleSort(column: string): void {
+      if (this.sortColumn === column) {
+        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.sortColumn = column;
+        this.sortDirection = 'asc';
+      }
+
+      this.sortTickets();
+    }
 
 
   filterTickets(): void {
-    const rawTerms = this.searchTerms.map(t => t.toLowerCase());
+          const rawTerms = this.searchTerms.map(t => t.toLowerCase());
 
-    let ticketsToFilter = [...this.tickets];
+          let ticketsToFilter = [...this.tickets];
 
-    if (rawTerms.length > 0) {
-      ticketsToFilter = ticketsToFilter.filter(ticket =>
-        rawTerms.some(term =>
-          ticket.ticketId?.toLowerCase().includes(term)
-        )
-      );
-    }
+          if (rawTerms.length > 0) {
+            ticketsToFilter = ticketsToFilter.filter(ticket =>
+              rawTerms.some(term =>
+                ticket.ticketId?.toLowerCase().includes(term)
+              )
+            );
+          }
 
-  ticketsToFilter = ticketsToFilter.filter(ticket =>
-    (!this.columnSearch.ticketId || ticket.ticketId?.toLowerCase().includes(this.columnSearch.ticketId.toLowerCase())) &&
-    (!this.columnSearch.jiraType || ticket.jiraType?.toLowerCase().includes(this.columnSearch.jiraType.toLowerCase())) &&
-    (!this.columnSearch.description || ticket.description?.toLowerCase().includes(this.columnSearch.description.toLowerCase())) &&
-    (!this.columnSearch.assignee || ticket.assignee?.toLowerCase().includes(this.columnSearch.assignee.toLowerCase())) &&
-    (!this.columnSearch.status || ticket.status?.toLowerCase().includes(this.columnSearch.status.toLowerCase())) &&
-    (!this.columnSearch.estimateTime || ticket.estimateTime?.toLowerCase().includes(this.columnSearch.estimateTime.toLowerCase())) &&
-    (!this.columnSearch.storyPoint || ticket.storyPoint?.toString().toLowerCase().includes(this.columnSearch.storyPoint.toLowerCase())) &&
-    (!this.columnSearch.releaseTag || ticket.releaseTag?.toLowerCase().includes(this.columnSearch.releaseTag.toLowerCase())) &&
-    (!this.columnSearch.sprint || ticket.sprint?.toString().toLowerCase().includes(this.columnSearch.sprint.toLowerCase()))
-  );
+          ticketsToFilter = ticketsToFilter.filter(ticket =>
+            (!this.columnSearch.ticketId || ticket.ticketId?.toLowerCase().includes(this.columnSearch.ticketId.toLowerCase())) &&
+            (!this.columnSearch.jiraType || ticket.jiraType?.toLowerCase().includes(this.columnSearch.jiraType.toLowerCase())) &&
+            (!this.columnSearch.description || ticket.description?.toLowerCase().includes(this.columnSearch.description.toLowerCase())) &&
+            (!this.columnSearch.assignee || ticket.assignee?.toLowerCase().includes(this.columnSearch.assignee.toLowerCase())) &&
+            (!this.columnSearch.status || ticket.status?.toLowerCase().includes(this.columnSearch.status.toLowerCase())) &&
+            (!this.columnSearch.estimateTime || (ticket.estimateTime && parseFloat(ticket.estimateTime.toString()) === parseFloat(this.columnSearch.estimateTime))) &&
+            (!this.columnSearch.storyPoint || (ticket.storyPoint && parseFloat(ticket.storyPoint.toString()) === parseFloat(this.columnSearch.storyPoint))) &&
+            (!this.columnSearch.releaseTag || ticket.releaseTag?.toLowerCase().includes(this.columnSearch.releaseTag.toLowerCase())) &&
+            (!this.columnSearch.sprint || (ticket.sprint && parseFloat(ticket.sprint.toString()) === parseFloat(this.columnSearch.sprint)))
+          );
 
-    this.filteredTickets = ticketsToFilter;
-    this.sortTickets();
-    this.currentPage = 1;
-    this.updatePagedTickets();
-  }
-
-    sortBy(column: string, direction: 'asc' | 'desc'): void {
-      this.sortColumn = column;
-      this.sortDirection = direction;
-      this.sortTickets();
-    }
+          this.filteredTickets = ticketsToFilter;
+          this.sortTickets();
+          this.updatePagedTickets();
+        }
 
 
     sortTickets(): void {
       const direction = this.sortDirection === 'asc' ? 1 : -1;
 
       this.filteredTickets.sort((a, b) => {
-        const aValue = (a[this.sortColumn] ?? '').toString().toLowerCase();
-        const bValue = (b[this.sortColumn] ?? '').toString().toLowerCase();
+        const aValue = a[this.sortColumn];
+        const bValue = b[this.sortColumn];
+        let aCompareValue = aValue;
+        let bCompareValue = bValue;
 
-        return aValue < bValue ? -1 * direction : aValue > bValue ? 1 * direction : 0;
+        if (['estimateTime', 'storyPoint', 'sprint'].includes(this.sortColumn)) {
+          aCompareValue = parseFloat(aValue?.toString() || '0');
+          bCompareValue = parseFloat(bValue?.toString() || '0');
+        } else {
+          aCompareValue = aValue?.toString().toLowerCase() || '';
+          bCompareValue = bValue?.toString().toLowerCase() || '';
+        }
+
+        return aCompareValue < bCompareValue ? -1 * direction :
+              aCompareValue > bCompareValue ? 1 * direction : 0;
       });
 
-      this.updatePagedTickets();
-    }
+        this.updatePagedTickets();
+      }
+
 
     setActive(button: string) {
       if (this.selectedTickets.length === 1) {
@@ -200,34 +215,38 @@ export class ActionComponent {
 
 
     updateBuildStatus() {
-      const updatedTickets = this.selectedTickets.map(ticket => {
-      const updatedStatus = ticket.jiraType.toLowerCase() === 'bug' ? 'Deployed' : 'Inbuilt';
-      const updateType = ticket.jiraType.toLowerCase() === "bug" ? 'Story' : 'Bug';
-      return { ...ticket, status: updatedStatus, jiraType: updateType};
-    });
+        const updatedTickets = this.selectedTickets
+          .filter(ticket => ticket.status?.toLowerCase() !== 'deployed')
+          .map(ticket => {
+            const updatedStatus = ticket.jiraType.toLowerCase() === 'bug' ? 'Deployed' : 'Inbuilt';
+            return { ...ticket, status: updatedStatus };
+          });
 
-    const buildSequence = this.generateBuildSequence();
-    const utcDatetime = new Date().toISOString();
+        if (updatedTickets.length === 0) {
+          this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Selected ticket is already deployed.'});
+          this.updateBuild = false;
+          return;
+        }
 
-    this.jiraService.updateBuildStatus(updatedTickets, buildSequence, utcDatetime).subscribe({
-      next: () => {
-        this.jiraService.getAllTickets().subscribe(tickets => {
-          tickets.map((ticket) => {
-            if (updatedTickets.some(updated => updated.ticketId === ticket.ticketId)) {
-              console.log(updatedTickets);
-            }
-          })
-          this.filterTickets();
+        const buildSequence = this.generateBuildSequence();
+        const utcDatetime = new Date().toISOString();
+
+        this.jiraService.updateBuildStatus(updatedTickets, buildSequence, utcDatetime).subscribe({
+          next: () => {
+            this.jiraService.getAllTickets().subscribe(tickets => {
+              this.tickets = tickets;
+              this.filterTickets();
+            });
+            this.message.add({ severity: 'success', summary: 'Success', detail: 'Updated Build Successfully' });
+            this.updateBuild = false;
+          },
+          error: () => {
+            this.message.add({ severity: 'error', summary: 'Error', detail: 'Build Failed' });
+          }
         });
-        this.message.add({ severity: 'success', summary: 'Success', detail: 'Updated Build Successfully' });
-        this.updateBuild = false
-      },
-      error: () => {
-        this.message.add({ severity: 'error', summary: 'Error', detail: 'Build Failed' });
+
+        this.selectedTickets = [];
       }
-    });
-    this.selectedTickets = []
-  }
 
     generateBuildSequence(): string {
       const now = new Date();
@@ -238,11 +257,14 @@ export class ActionComponent {
 
 
     updateStoryPoints(): void {
-    const ticketsWithEstimate = this.selectedTickets.filter(t => t.estimateTime);
-    if (ticketsWithEstimate.length === 0) {
-      alert("Estimate time required to update story points.");
-      return;
-    }
+      const ticketsWithEstimate = this.selectedTickets
+        .filter(t => t.estimateTime && t.status?.toLowerCase() !== 'deployed');
+
+      if (ticketsWithEstimate.length === 0) {
+        this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Selected ticket is already deployed.'});
+        this.updateStoryPoint = false;
+        return;
+      }
 
       this.jiraService.updateStoryPoints(ticketsWithEstimate).subscribe({
         next: () => {
@@ -254,9 +276,10 @@ export class ActionComponent {
           this.updateStoryPoint = false;
         },
         error: () => {
-          this.message.add({ severity: 'success', summary: 'Success', detail: 'Failed to update story points.' });
+          this.message.add({ severity: 'error', summary: 'Error', detail: 'Failed to update story points.' });
         }
       });
+      this.selectedTickets = [];
     }
 
     showReleaseDialog: boolean = false;
@@ -269,9 +292,14 @@ export class ActionComponent {
     }
 
     confirmReleaseTag(): void {
-      if (!this.releaseTagValue.trim()) return;
+      const validTickets = this.selectedTickets.filter(t => t.status?.toLowerCase() !== 'deployed');
 
-      this.jiraService.updateReleaseTags(this.selectedTickets, this.releaseTagValue).subscribe({
+      if (!this.releaseTagValue.trim() || validTickets.length === 0) {
+        this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Cannot update release tag for deployed tickets.' });
+        return;
+      }
+
+      this.jiraService.updateReleaseTags(validTickets, this.releaseTagValue).subscribe({
         next: () => {
           this.showReleaseDialog = false;
           this.jiraService.getAllTickets().subscribe(tickets => {
@@ -284,6 +312,7 @@ export class ActionComponent {
           this.message.add({ severity: 'error', summary: 'Error', detail: 'Failed to update release tag.' });
         }
       });
+      this.selectedTickets = [];
     }
 
 
@@ -292,8 +321,15 @@ export class ActionComponent {
     editedTickets: any[] = [];
 
     enableEstimateEdit() {
+      const editableTickets = this.selectedTickets.filter(ticket => ticket.status?.toLowerCase() !== 'deployed');
+
+      if (editableTickets.length === 0) {
+        this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Selected tickets are already deployed.' });
+        return;
+      }
+
       this.editingEstimateTime = true;
-      this.editedTickets = this.selectedTickets.map(ticket => ({
+      this.editedTickets = editableTickets.map(ticket => ({
         ticketId: ticket.ticketId,
         estimateTime: ticket.estimateTime
       }));
@@ -306,7 +342,6 @@ export class ActionComponent {
     }
 
     saveEstimateEdit(): void {
-      console.log(this.editedTickets)
       this.jiraService.updateEstimateTimes(this.editedTickets).subscribe({
         next: () => {
           this.editingEstimateTime = false;
@@ -322,19 +357,69 @@ export class ActionComponent {
           this.message.add({ severity: 'error', summary: 'Error', detail: 'Failed to update estimate time.'});
         }
       });
+      this.selectedTickets = [];
     }
 
       getEditedTicket(ticketId: string): any {
         return this.editedTickets.find(t => t.ticketId === ticketId);
     }
 
-
-
-
     cancelBuild() {
       this.updateBuild = false
       this.showReleaseDialog = false
       this.updateStoryPoint = false
     }
+
+    updatePagedTickets(): void {
+      const start = (this.currentPage - 1 ) * this.pageSize;
+      this.pagedTickets = this.filteredTickets.slice(start, start + this.pageSize);
+    }
+
+
+    updatePageSize(newSize: number) {
+        this.pageSize = newSize;
+        this.currentPage = 1
+        this.updatePagedTickets();
+    }
+
+    onPageChange(event: any) {
+        this.currentPage = Math.floor(event.first / this.pageSize) + 1;
+        this.updatePagedTickets();
+    }
+    get first(): number {
+      return (this.currentPage - 1) * this.pageSize;
+    }
+    get totalRecords(): number {
+      return Math.max(this.filteredTickets.length, this.pageSize * 3);
+    }
+
+    togglePage() {
+      this.showpage = !this.showpage
+    }
+
+    goInputText: string = "";
+
+    gotoPage() {
+      if(parseInt(this.goInputText) <= this.tickets.length/this.pageSize) {
+        this.currentPage = parseInt(this.goInputText)
+      } else {
+        this.message.add({ severity: 'error', summary: 'Error', detail: 'Page Number Not Exists'});
+      }
+      this.goInputText = ""
+    }
+
+
+    @HostListener('document:click', ['$event'])
+    onDocumentClick(event: MouseEvent): void {
+      const target = event.target as HTMLElement;
+
+      const clickedInsideDropdown =
+        this.menuDropdown?.nativeElement.contains(target) ||
+        this.menuToggle?.nativeElement.contains(target);
+
+      if (!clickedInsideDropdown) {
+        this.showpage = false;
+      }
+  }
 
 }

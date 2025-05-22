@@ -34,6 +34,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { BlankpageComponent } from './blankpage/blankpage.component';
 import { DialogModule } from 'primeng/dialog';
 import { DatePipe } from './pipe/date.pipe';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { DatePipe } from './pipe/date.pipe';
     TableModule,
     HttpClientModule,
     TooltipModule,
-    DialogModule
+    DialogModule,
+    PaginatorModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

@@ -24,12 +24,19 @@
         <div style="display: flex; align-items: center; gap: 5px;">
             <p>Select All</p>
             <div class="horizontalline"></div>
-            <p-inputSwitch [(ngModel)]="checked" (click)="change()"/>
+            <p-inputSwitch [(ngModel)]="checked" (click)="change()" />
         </div>
-        <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px;">
+        <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px; cursor: pointer;" (click)="togglePage()" #menuToggle>
             <i class="pi pi-bars" style="font-size: 1rem; font-weight: bold;"></i>
-            <span>20</span>
+            <span class="pageSize">{{ pageSize }}</span>
+
+            <div class="pagenumber" *ngIf="showpage" #menuDropdown>
+                <div (click)="updatePageSize(20)" [ngClass]="{ 'active-page-size': pageSize === 20 }">Show 20</div>
+                <div (click)="updatePageSize(30)" [ngClass]="{ 'active-page-size': pageSize === 30 }">Show 30</div>
+                <div (click)="updatePageSize(40)" [ngClass]="{ 'active-page-size': pageSize === 40 }">Show 40</div>
+            </div>
         </div>
+
     </div>
     <div class="table">
         <table class="table-container">
@@ -44,16 +51,26 @@
 
                     </th>
                     <th>
-                        <div class="row">
+                        <div class="row" (click)="toggleSort('ticketId')">
                         <div>
                             <span>Ticket Id</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'ticketId' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('ticketId', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'ticketId' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('ticketId', 'desc')"></i>
+                            <i 
+                            *ngIf="sortColumn !== 'ticketId' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'ticketId' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'ticketId' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'ticketId' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
                         </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
@@ -62,16 +79,26 @@
                         </div>
                     </th>
                     <th>
-                        <div class="row">
+                        <div class="row" (click)="toggleSort('jiraType')">
                         <div>
                             <span>Jira Type</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'jiraType' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('jiraType', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'jiraType' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('jiraType', 'desc')"></i>
+                            <i 
+                            *ngIf="sortColumn !== 'jiraType' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'jiraType' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'jiraType' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'jiraType' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
                         </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
@@ -80,16 +107,26 @@
                         </div>
                     </th>
                     <th>
-                        <div class="row">
+                        <div class="row" (click)="toggleSort('description')">
                         <div>
                             <span>Description</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'description' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('description', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'description' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('description', 'desc')"></i>
+                            <i 
+                            *ngIf="sortColumn !== 'description' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'description' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'description' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'description' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
                         </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
@@ -98,16 +135,26 @@
                         </div>
                     </th>
                     <th>
-                        <div class="row">
+                        <div class="row" (click)="toggleSort('assignee')">
                         <div>
                             <span>Assignee</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'assignee' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('assignee', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'assignee' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('assignee', 'desc')"></i>
+                            <i 
+                            *ngIf="sortColumn !== 'assignee' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'assignee' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'assignee' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'assignee' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
                         </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
@@ -116,16 +163,26 @@
                         </div>
                     </th>
                     <th>
-                        <div class="row">
+                        <div class="row" (click)="toggleSort('status')">
                         <div>
                             <span>Status</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'status' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('status', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'status' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('status', 'desc')"></i>
+                            <i 
+                            *ngIf="sortColumn !== 'status' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'status' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'status' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'status' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
                         </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
@@ -134,16 +191,26 @@
                         </div>
                     </th>
                     <th>
-                        <div class="row"> 
+                        <div class="row" (click)="toggleSort('estimateTime')">
                         <div>
-                            <span>Estimated Time</span>
+                            <span>EstimatedTime</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'estimateTime' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('estimateTime', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'estimateTime' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('estimateTime', 'desc')"></i>
+                            <i 
+                            *ngIf="sortColumn !== 'estimateTime' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'estimateTime' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'estimateTime' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'estimateTime' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
                         </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
@@ -152,16 +219,26 @@
                         </div>
                     </th>
                     <th>
-                        <div class="row">
+                        <div class="row" (click)="toggleSort('storyPoint')">
                         <div>
                             <span>Story Point</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'storyPoint' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('storyPoint', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'storyPoint' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('storyPoint', 'desc')"></i>
+                            <i 
+                            *ngIf="sortColumn !== 'storyPoint' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'storyPoint' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'storyPoint' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'storyPoint' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
                         </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
@@ -170,16 +247,26 @@
                         </div>
                     </th>
                     <th>
-                        <div class="row">
+                        <div class="row" (click)="toggleSort('releaseTag')">
                         <div>
                             <span>Release Tag</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'releaseTag' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('releaseTag', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'releaseTag' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('releaseTag', 'desc')"></i>
+                            <i 
+                            *ngIf="sortColumn !== 'releaseTag' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'releaseTag' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'releaseTag' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'releaseTag' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
                         </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
@@ -188,16 +275,26 @@
                         </div>
                     </th>
                     <th>
-                        <div class="row">
+                        <div class="row" (click)="toggleSort('sprint')">
                         <div>
                             <span>Sprint</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'sprint' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('sprint', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'sprint' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('sprint', 'desc')"></i>
+                            <i 
+                            *ngIf="sortColumn !== 'sprint' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'sprint' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'sprint' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'sprint' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
                         </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
@@ -207,7 +304,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody >
                 <tr *ngFor="let ticket of pagedTickets">
                   <td>
                     <p-checkbox
@@ -217,10 +314,10 @@
                     </p-checkbox>
 
                   </td>
-                  <td>{{ ticket.ticketId }}</td>
-                  <td>{{ ticket.jiraType }}</td>
+                  <td style="width: 100px;">{{ ticket.ticketId }}</td>
+                  <td style="width: 100px;">{{ ticket.jiraType }}</td>
                   <td pTooltip="{{ ticket.description }}" class="text-ellipsis" tooltipPosition="bottom">{{ ticket.description }}</td>
-                  <td pTooltip="{{ ticket.assignee }}" tooltipPosition="bottom">{{ ticket.assignee }}</td>
+                  <td pTooltip="{{ ticket.assignee }}" tooltipPosition="bottom" style="width: 100px;">{{ ticket.assignee }}</td>
                   <td><span [ngStyle]="{ background: ticket.status === 'Deployed' ? '#f2f2f2': '#CFEBCD'}" style="padding: 5px; border-radius: 10px; display: inline-block; width: 80px; text-align: center;">{{ ticket.status }}</span></td>
                   <td *ngIf="editingEstimateTime && selectedTickets.includes(ticket)">
                     <input
@@ -230,29 +327,23 @@
                     />
                     </td>
 
-                    <td *ngIf="!editingEstimateTime || !selectedTickets.includes(ticket)">
+                    <td *ngIf="!editingEstimateTime || !selectedTickets.includes(ticket)" style="width: 80px;">
                     {{ ticket.estimateTime }}h
-                  </td>
-                  <!-- <td pTooltip="{{ ticket.estimateTime }}" tooltipPosition="bottom">{{ ticket.estimateTime }}h</td> -->
-                  <td>{{ ticket.storyPoint }}</td>
+                    </td>
+                  <td style="width: 80px;">{{ ticket.storyPoint }}</td>
                   <td pTooltip="{{ ticket.releaseTag }}" tooltipPosition="bottom" class="text-ellipsis">{{ ticket.releaseTag }}</td>
-                  <td >{{ ticket.sprint }}</td>
+                  <td style="width: 80px;">{{ ticket.sprint }}</td>
                 </tr>
-          </tbody>
+            </tbody>
           </table>
     </div>
     <div style="display: flex;">
     <div class="buttons">
-            <!-- <button
-                (click)="setActive('estimatedTime')"
-                [ngStyle]="getButtonStyle('estimatedTime')">
-                Update Estimated Time
-            </button> -->
 
             <button
-            *ngIf="!editingEstimateTime && permissionMap?.['UpdateEstimateTime']"
-            (click)="enableEstimateEdit()">
-             Update Estimated Time
+                *ngIf="!editingEstimateTime && permissionMap?.['UpdateEstimateTime']"
+                (click)="enableEstimateEdit()" [disabled]="selectedTickets.length === 0" [ngStyle]="getButtonStyle('estimatedTime')">
+                Update Estimated Time
             </button>
 
             <div style="display: flex; justify-content: flex-end;" *ngIf="editingEstimateTime && permissionMap?.['UpdateEstimateTime']">
@@ -263,32 +354,39 @@
             <button
             *ngIf="permissionMap?.['UpdateReleaseTag']"
             (click)="setActive('releaseTag'); openReleaseDialog()"
-            [ngStyle]="getButtonStyle('releaseTag')">
+            [ngStyle]="getButtonStyle('releaseTag')"
+            [disabled]="selectedTickets.length !== 1">
             Update Release Tag
             </button>
 
             <button
             *ngIf="permissionMap?.['UpdateStoryPoint']"
             (click)="setActive('storyPoint'); updateStoryPoint = true"
-            [ngStyle]="getButtonStyle('storyPoint')">
+            [ngStyle]="getButtonStyle('storyPoint')" [disabled]="selectedTickets.length !== 1">
             Update Story Point
             </button>
 
             <button
             *ngIf="permissionMap?.['UpdateStatusForBuild']"
             (click)="setActive('status'); updateBuild = true"
-            [ngStyle]="getButtonStyle('status')">
+            [ngStyle]="getButtonStyle('status')" [disabled]="selectedTickets.length !== 1">
             Update Status for Build
             </button>
 
 
-        </div>
+    </div>
         <div class="page">
-            <i class="pi pi-angle-left" style="font-size: 1rem"></i>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <i class="pi pi-angle-right" style="font-size: 1rem"></i>
+            <div>
+                <p-paginator
+                    (onPageChange)="onPageChange($event)"
+                    [first]="first"
+                    [rows]="pageSize" 
+                    [totalRecords]="totalRecords"
+                    [pageLinkSize]="3"
+                />
+           </div>
+           <input type="number" class="goInput" [(ngModel)]="goInputText"/>
+           <button class="goButton" (click)="gotoPage()">Go</button>
         </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
            style="display: flex; align-items: center; background-color: white; border-radius: 50%; margin-top: 10px; cursor: pointer; margin-right: 10px;" 
            (click)="toggleMenu()"></i>
     </div>
-    <div class="card" [ngStyle]="!visible ? {'padding': '10px'} : {}">
+    <div class="card" [ngClass]="{ 'custom-tab-padding': !visible }">
         <p-tabMenu [model]="visible ? items : item"></p-tabMenu>
     </div>
 </div>
