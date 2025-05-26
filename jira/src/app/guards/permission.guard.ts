@@ -19,13 +19,11 @@ export class PermissionGuard  {
         } else {
           this.authService.getUserData(user.uid).subscribe(userData => {
             if (userData.status !== 'Active') {
-              alert("Your account is disabled");
               this.router.navigate(['login']);
               observer.next(false);
             } else if (userData.permissionMap?.[requiredPermission]) {
               observer.next(true);
             } else {
-              alert("Permission Denied");
               this.router.navigate(['action']);
               observer.next(false);
             }

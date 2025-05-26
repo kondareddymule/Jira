@@ -1,8 +1,9 @@
-import { Component, inject, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, ChangeDetectorRef, ViewChild, Renderer2 } from '@angular/core';
 import { JiraService } from '../services/jira.service';
 import { LayoutService } from '../services/layout.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-action',
@@ -15,6 +16,7 @@ export class ActionComponent {
   message: MessageService = inject(MessageService)
   @ViewChild('menuDropdown', { static: false }) menuDropdown!: ElementRef;
   @ViewChild('menuToggle', { static: false }) menuToggle!: ElementRef;
+  @ViewChild('paginator', { static: false, read: ElementRef }) paginatorRef!: ElementRef;
 
   checked: boolean = false
   sidebarVisible: boolean = true;
@@ -35,23 +37,31 @@ export class ActionComponent {
 
   selectedTickets: any[] = [];
   selectAll: boolean = false;
-  activeButton: string = 'estimatedTime';
+  activeButton: string = '';
 
   updateBuild: boolean = false
   updateReleaseTag: boolean = false
-  updateStoryPoint: boolean = false
 
   builtUpdateInput: string = ""
 
   showpage: boolean = false
 
+  selected: boolean = true
+
   permissionMap: { [key: string]: boolean } = {};
 
   
-
   toggleSelectAll(checked: boolean): void {
   this.selectAll = checked;
   this.selectedTickets = checked ? [...this.filteredTickets] : [];
+  this.selected = !this.selected
+  }
+
+  togglepage(checked: boolean): void {
+  this.selectAll = checked;
+  const start = (this.currentPage - 1 ) * this.pageSize;
+  this.selectedTickets = this.filteredTickets.slice(start, start + this.pageSize)
+  this.selectedTickets = checked ? [...this.selectedTickets] : [];
   }
 
 
@@ -68,7 +78,9 @@ export class ActionComponent {
   constructor(
     private jiraService: JiraService,
     private layoutService: LayoutService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdRef: ChangeDetectorRef, 
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -204,12 +216,21 @@ export class ActionComponent {
 
     getButtonStyle(button: string) {
       const isActive = this.activeButton === button && this.selectedTickets.length === 1;
-      return {
-        background: isActive ? '#3B82F6' : '#ffffff',
-        color: isActive ? '#ffffff' : '#000000',
-        cursor: this.selectedTickets.length === 1 ? 'pointer' : 'not-allowed',
-        'box-shadow': isActive ? '0 4px 8px rgba(0, 0, 0, 0.3)' : 'none'
-      };
+       if (button === "estimateTime" ){
+        return {
+          background: isActive ? '#3B82F6' : '#ffffff',
+          color: isActive ? '#ffffff' : '#000000',
+          cursor: this.selectedTickets.length >= 1 ? 'pointer' : 'not-allowed',
+          'box-shadow': isActive ? '0 4px 8px rgba(0, 0, 0, 0.3)' : 'none'
+        }
+      } else {
+        return {
+          background: isActive ? '#3B82F6' : '#ffffff',
+          color: isActive ? '#ffffff' : '#000000',
+          cursor: this.selectedTickets.length === 1 ? 'pointer' : 'not-allowed',
+         'box-shadow': isActive ? '0 4px 8px rgba(0, 0, 0, 0.3)' : 'none'
+        }
+      }
     }
 
 
@@ -219,7 +240,8 @@ export class ActionComponent {
           .filter(ticket => ticket.status?.toLowerCase() !== 'deployed')
           .map(ticket => {
             const updatedStatus = ticket.jiraType.toLowerCase() === 'bug' ? 'Deployed' : 'Inbuilt';
-            return { ...ticket, status: updatedStatus };
+            const updateType = ticket.jiraType.toLowerCase() === "bug" ? 'Story' : 'Bug';
+            return { ...ticket, status: updatedStatus, jiraType: updateType };
           });
 
         if (updatedTickets.length === 0) {
@@ -246,6 +268,7 @@ export class ActionComponent {
         });
 
         this.selectedTickets = [];
+        this.activeButton = ""
       }
 
     generateBuildSequence(): string {
@@ -255,40 +278,34 @@ export class ActionComponent {
       return `${sequence}`;
     }
 
-
-    updateStoryPoints(): void {
-      const ticketsWithEstimate = this.selectedTickets
-        .filter(t => t.estimateTime && t.status?.toLowerCase() !== 'deployed');
-
-      if (ticketsWithEstimate.length === 0) {
-        this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Selected ticket is already deployed.'});
-        this.updateStoryPoint = false;
-        return;
-      }
-
-      this.jiraService.updateStoryPoints(ticketsWithEstimate).subscribe({
-        next: () => {
-          this.jiraService.getAllTickets().subscribe(tickets => {
-            this.tickets = tickets;
-            this.filterTickets();
-          });
-          this.message.add({ severity: 'success', summary: 'Success', detail: 'Story points updated successfully.' });
-          this.updateStoryPoint = false;
-        },
-        error: () => {
-          this.message.add({ severity: 'error', summary: 'Error', detail: 'Failed to update story points.' });
-        }
-      });
-      this.selectedTickets = [];
-    }
-
     showReleaseDialog: boolean = false;
     releaseTagValue: string = '';
+    updateStoryPoint: boolean = false
+    storyPointValue : number | null = null;
 
 
     openReleaseDialog(): void {
-      this.showReleaseDialog = true;
+      const validTickets = this.selectedTickets.filter(t => t.status?.toLowerCase() !== 'deployed');
+      if(validTickets.length > 0) {
+        this.showReleaseDialog = true;
+      } else {
+        this.activeButton = ""
+        this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Selected tickets are already deployed.' });
+      }
+
       this.releaseTagValue = '';
+    }
+
+    openStoryPointDialog(): void {
+      const validTickets = this.selectedTickets.filter(t => t.status?.toLowerCase() !== 'deployed');
+      if(validTickets.length > 0) {
+        this.updateStoryPoint = true;
+      } else {
+        this.activeButton = ""
+        this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Selected tickets are already deployed.' });
+      }
+
+      this.storyPointValue = null;
     }
 
     confirmReleaseTag(): void {
@@ -313,6 +330,32 @@ export class ActionComponent {
         }
       });
       this.selectedTickets = [];
+      this.activeButton = ""
+    }
+
+    confirmStoryPoint(): void {
+      const validTickets = this.selectedTickets.filter(t => t.status?.toLowerCase() !== 'deployed');
+
+      if (!this.storyPointValue || validTickets.length === 0) {
+        this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Cannot update release tag for deployed tickets.' });
+        return;
+      }
+
+      this.jiraService.updateStoryPoints(validTickets, this.storyPointValue).subscribe({
+        next: () => {
+          this.updateStoryPoint = false;
+          this.jiraService.getAllTickets().subscribe(tickets => {
+            this.tickets = tickets;
+            this.filterTickets();
+          });
+          this.message.add({ severity: 'success', summary: 'Success', detail: 'Story Point updated successfully.' });
+        },
+        error: () => {
+          this.message.add({ severity: 'error', summary: 'Error', detail: 'Failed to update Story Point.' });
+        }
+      });
+      this.selectedTickets = [];
+      this.activeButton = ""
     }
 
 
@@ -325,9 +368,10 @@ export class ActionComponent {
 
       if (editableTickets.length === 0) {
         this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Selected tickets are already deployed.' });
+        this.activeButton = ""
         return;
       }
-
+      this.selectedTickets = editableTickets
       this.editingEstimateTime = true;
       this.editedTickets = editableTickets.map(ticket => ({
         ticketId: ticket.ticketId,
@@ -338,6 +382,7 @@ export class ActionComponent {
 
     cancelEstimateEdit(): void {
       this.editingEstimateTime = false;
+      this.activeButton = ""
       this.editedTickets = [];
     }
 
@@ -358,6 +403,7 @@ export class ActionComponent {
         }
       });
       this.selectedTickets = [];
+      this.activeButton = ""
     }
 
       getEditedTicket(ticketId: string): any {
@@ -368,6 +414,7 @@ export class ActionComponent {
       this.updateBuild = false
       this.showReleaseDialog = false
       this.updateStoryPoint = false
+      this.activeButton = ""
     }
 
     updatePagedTickets(): void {
@@ -377,15 +424,26 @@ export class ActionComponent {
 
 
     updatePageSize(newSize: number) {
-        this.pageSize = newSize;
-        this.currentPage = 1
-        this.updatePagedTickets();
+      this.pageSize = newSize;
+      this.currentPage = 1;
+      this.updatePagedTickets();
+      setTimeout(() => this.disableInvalidPageButtons(), 0);
     }
 
     onPageChange(event: any) {
-        this.currentPage = Math.floor(event.first / this.pageSize) + 1;
+      const newPage = Math.floor(event.first / this.pageSize) + 1;
+      const totalPages = Math.ceil(this.filteredTickets.length / this.pageSize);
+
+      if (newPage > totalPages) {
+        setTimeout(() => this.disableInvalidPageButtons(), 0);
+        return;
+      }
+
+        this.currentPage = newPage;
         this.updatePagedTickets();
-    }
+
+        setTimeout(() => this.disableInvalidPageButtons(), 0);
+      }
     get first(): number {
       return (this.currentPage - 1) * this.pageSize;
     }
@@ -400,13 +458,20 @@ export class ActionComponent {
     goInputText: string = "";
 
     gotoPage() {
-      if(parseInt(this.goInputText) <= this.tickets.length/this.pageSize) {
-        this.currentPage = parseInt(this.goInputText)
+      const pageNum = parseInt(this.goInputText, 10);
+
+      const totalPages = Math.ceil(this.filteredTickets.length / this.pageSize);
+
+      if (pageNum >= 1 && pageNum <= totalPages) {
+        this.currentPage = pageNum;
+        this.updatePagedTickets();
       } else {
-        this.message.add({ severity: 'error', summary: 'Error', detail: 'Page Number Not Exists'});
+        this.message.add({ severity: 'error', summary: 'Error', detail: 'Page Number Does Not Exist' });
       }
-      this.goInputText = ""
-    }
+
+      this.goInputText = '';
+  }
+
 
 
     @HostListener('document:click', ['$event'])
@@ -421,5 +486,74 @@ export class ActionComponent {
         this.showpage = false;
       }
   }
+
+  storyPointUpdate() {
+    const validTickets = this.selectedTickets.filter(t => t.status?.toLowerCase() !== 'deployed');
+    if(validTickets.length > 0) {
+      this.updateStoryPoint = true
+    } else {
+      this.activeButton = ""
+      this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Selected tickets are already deployed.' });
+    }
+  }
+
+  BuildUpdate() {
+      const validTickets = this.selectedTickets.filter(t => t.status?.toLowerCase() !== 'deployed');
+      if(validTickets.length > 0) {
+        this.updateBuild = true
+      } else {
+        this.activeButton = ""
+        this.message.add({ severity: 'warn', summary: 'No Action', detail: 'Selected tickets are already deployed.' });
+      }
+  }
+
+
+  ngAfterViewChecked() {
+      this.cdRef.detectChanges();
+      setTimeout(() => this.disableInvalidPageButtons(), 0);
+    }
+
+
+    disableInvalidPageButtons() {
+      if (!this.paginatorRef?.nativeElement) return;
+
+      const totalPages = Math.ceil(this.filteredTickets.length / this.pageSize);
+      const currentPage = this.currentPage;
+
+      const buttons: NodeListOf<HTMLElement> = this.paginatorRef.nativeElement.querySelectorAll('.p-paginator-page');
+      const nextButton = this.paginatorRef.nativeElement.querySelector('.p-paginator-next');
+      const lastButton = this.paginatorRef.nativeElement.querySelector('.p-paginator-last');
+      const prevButton = this.paginatorRef.nativeElement.querySelector('.p-paginator-prev');
+      const firstButton = this.paginatorRef.nativeElement.querySelector('.p-paginator-first');
+
+      buttons.forEach((btn: HTMLElement) => {
+        const pageNumber = parseInt(btn.textContent?.trim() ?? '', 10);
+        if (pageNumber > totalPages) {
+          this.renderer.setAttribute(btn, 'disabled', 'true');
+          this.renderer.addClass(btn, 'disabled-page');
+        } else {
+          this.renderer.removeAttribute(btn, 'disabled');
+          this.renderer.removeClass(btn, 'disabled-page');
+        }
+      });
+
+      if (currentPage >= totalPages) {
+        nextButton && this.renderer.setAttribute(nextButton, 'disabled', 'true');
+        lastButton && this.renderer.setAttribute(lastButton, 'disabled', 'true');
+      } else {
+        nextButton && this.renderer.removeAttribute(nextButton, 'disabled');
+        lastButton && this.renderer.removeAttribute(lastButton, 'disabled');
+      }
+
+      if (currentPage <= 1) {
+        prevButton && this.renderer.setAttribute(prevButton, 'disabled', 'true');
+        firstButton && this.renderer.setAttribute(firstButton, 'disabled', 'true');
+      } else {
+        prevButton && this.renderer.removeAttribute(prevButton, 'disabled');
+        firstButton && this.renderer.removeAttribute(firstButton, 'disabled');
+      }
+    }
+
+
 
 }

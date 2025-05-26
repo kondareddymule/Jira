@@ -3,7 +3,12 @@
     <p-image src="../../assets/logo.png" alt="logo" width="50" height="50"></p-image>
   </div>
   <div class="right-container">
-    <span pTooltip="{{ userName }}" tooltipPosition="left">{{userName }}</span>
+    <span 
+        pTooltip="{{ userName ? (userName.charAt(0).toUpperCase() + userName.slice(1)) : '' }}" 
+        tooltipPosition="left">
+        {{ userName ? (userName.charAt(0).toUpperCase() + userName.slice(1)) : '' }}
+      </span>
+
     <img src="../../assets/Account.jpg" alt="profile" width="50" height="50" class="profile" />
     <div >
       <button (click)="logout()" class="logout">LOGOUT</button>

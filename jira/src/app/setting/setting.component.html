@@ -1,12 +1,50 @@
 <app-header></app-header>
 <app-dashboard></app-dashboard>
 
-
-<div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'">
+<div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'" class="container">
+  <div class="settings-container">
     <div>
-        <p>Authorization Token</p>
-        <input type="text"  pInputText />
-        <p>Base URL</p>
-        <input type="text"  pInputText />
+      <label style="font-weight: bold;">Authorization Token</label><br>
+      <input
+        type="text"
+        [(ngModel)]="authorizationToken"
+        name="authorizationToken"
+        class="inputfield"
+        [ngStyle]="{display: !isEditMode ? 'none':'flex'}"
+      />
+      <p *ngIf="!isEditMode" style="overflow-wrap: break-word;">{{authorizationToken}}</p>
+    </div>
+
+    <div>
+      <label style="font-weight: bold;">Base URL</label> <br>
+      <input
+        type="text"
+        [(ngModel)]="baseUrl"
+        name="baseUrl"
+        class="inputfield"
+        [ngStyle]="{display: !isEditMode ? 'none':'flex'}"
+      />
+      <p *ngIf="!isEditMode">{{baseUrl}}</p>
+    </div>
+
+    <div class="page">
+    <ng-container *ngIf="!isDataAvailable">
+        <button (click)="onCancel()" class="cancel">Back</button>
+        <button (click)="onSaveOrUpdate()" class="save">Save</button>
+    </ng-container>
+
+    <ng-container *ngIf="isDataAvailable">
+        <ng-container *ngIf="!isEditMode">
+            <button (click)="onCancel()" class="cancel">Back</button>
+            <button (click)="onEdit()" class="save">Edit</button>
+        </ng-container>
+
+        <ng-container *ngIf="isEditMode">
+            <button (click)="onCancel()" class="cancel">Cancel</button>
+            <button (click)="onSaveOrUpdate()" class="save">Update</button>
+        </ng-container>
+    </ng-container>
+    </div>
+
     </div>
 </div>

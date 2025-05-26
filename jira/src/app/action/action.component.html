@@ -22,7 +22,7 @@
     </div>
     <div style="display: flex; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 5px;">
-            <p>Select All</p>
+            <p style="cursor: pointer;" (click)=toggleSelectAll(selected)>Select All</p>
             <div class="horizontalline"></div>
             <p-inputSwitch [(ngModel)]="checked" (click)="change()" />
         </div>
@@ -46,7 +46,7 @@
                         <p-checkbox
                             [binary]="true"
                             [ngModel]="selectAll"
-                            (onChange)="toggleSelectAll($event.checked)">
+                            (onChange)="togglepage($event.checked)" [disabled]="editingEstimateTime">
                         </p-checkbox>
 
                     </th>
@@ -193,7 +193,7 @@
                     <th>
                         <div class="row" (click)="toggleSort('estimateTime')">
                         <div>
-                            <span>EstimatedTime</span>
+                            <span>Estimated Time</span>
                         </div>
 
                         <div class="column">
@@ -310,15 +310,16 @@
                     <p-checkbox
                         [binary]="true"
                         [ngModel]="selectedTickets.includes(ticket)"
-                        (onChange)="onTicketSelect(ticket, $event.checked)">
+                        (onChange)="onTicketSelect(ticket, $event.checked)"
+                        [disabled]="editingEstimateTime">
                     </p-checkbox>
 
                   </td>
-                  <td style="width: 100px;">{{ ticket.ticketId }}</td>
-                  <td style="width: 100px;">{{ ticket.jiraType }}</td>
+                  <td style="width: 110px;">{{ ticket.ticketId }}</td>
+                  <td style="width: 110px;">{{ ticket.jiraType }}</td>
                   <td pTooltip="{{ ticket.description }}" class="text-ellipsis" tooltipPosition="bottom">{{ ticket.description }}</td>
-                  <td pTooltip="{{ ticket.assignee }}" tooltipPosition="bottom" style="width: 100px;">{{ ticket.assignee }}</td>
-                  <td><span [ngStyle]="{ background: ticket.status === 'Deployed' ? '#f2f2f2': '#CFEBCD'}" style="padding: 5px; border-radius: 10px; display: inline-block; width: 80px; text-align: center;">{{ ticket.status }}</span></td>
+                  <td pTooltip="{{ ticket.assignee }}" tooltipPosition="bottom" style="width: 110px;">{{ ticket.assignee }}</td>
+                  <td><span [ngStyle]="{ background: ticket.status === 'Deployed' ? '#f2f2f2': '#CFEBCD'}" style="padding: 5px; border-radius: 10px; display: inline-block; width: 110px; text-align: center;">{{ ticket.status }}</span></td>
                   <td *ngIf="editingEstimateTime && selectedTickets.includes(ticket)">
                     <input
                         type="number"
@@ -327,12 +328,12 @@
                     />
                     </td>
 
-                    <td *ngIf="!editingEstimateTime || !selectedTickets.includes(ticket)" style="width: 80px;">
+                    <td *ngIf="!editingEstimateTime || !selectedTickets.includes(ticket)" style="width: 110px;">
                     {{ ticket.estimateTime }}h
                     </td>
-                  <td style="width: 80px;">{{ ticket.storyPoint }}</td>
+                  <td style="width: 110px;">{{ ticket.storyPoint }}</td>
                   <td pTooltip="{{ ticket.releaseTag }}" tooltipPosition="bottom" class="text-ellipsis">{{ ticket.releaseTag }}</td>
-                  <td style="width: 80px;">{{ ticket.sprint }}</td>
+                  <td style="width: 110px;">{{ ticket.sprint }}</td>
                 </tr>
             </tbody>
           </table>
@@ -342,17 +343,19 @@
 
             <button
                 *ngIf="!editingEstimateTime && permissionMap?.['UpdateEstimateTime']"
-                (click)="enableEstimateEdit()" [disabled]="selectedTickets.length === 0" [ngStyle]="getButtonStyle('estimatedTime')">
+                (click)="setActive('estimateTime'); enableEstimateEdit()" 
+                [disabled]="selectedTickets.length <= 0" 
+                [ngStyle]="getButtonStyle('estimateTime')">
                 Update Estimated Time
             </button>
 
-            <div style="display: flex; justify-content: flex-end;" *ngIf="editingEstimateTime && permissionMap?.['UpdateEstimateTime']">
-            <button (click)="saveEstimateEdit()">Save</button>
-            <button (click)="cancelEstimateEdit()">Cancel</button>
+            <div class="timeButtons" *ngIf="editingEstimateTime && permissionMap?.['UpdateEstimateTime']">
+            <button (click)="cancelEstimateEdit()" class="cancel" style="background-color: #ffffff !important; border: 1px solid gray;">Cancel</button>
+            <button (click)="saveEstimateEdit()" class="save">Save</button>
             </div>
 
             <button
-            *ngIf="permissionMap?.['UpdateReleaseTag']"
+            *ngIf="!editingEstimateTime && permissionMap?.['UpdateReleaseTag']"
             (click)="setActive('releaseTag'); openReleaseDialog()"
             [ngStyle]="getButtonStyle('releaseTag')"
             [disabled]="selectedTickets.length !== 1">
@@ -360,24 +363,25 @@
             </button>
 
             <button
-            *ngIf="permissionMap?.['UpdateStoryPoint']"
-            (click)="setActive('storyPoint'); updateStoryPoint = true"
+            *ngIf="!editingEstimateTime && permissionMap?.['UpdateStoryPoint']"
+            (click)="setActive('storyPoint'); storyPointUpdate()"
             [ngStyle]="getButtonStyle('storyPoint')" [disabled]="selectedTickets.length !== 1">
             Update Story Point
             </button>
 
             <button
-            *ngIf="permissionMap?.['UpdateStatusForBuild']"
-            (click)="setActive('status'); updateBuild = true"
+            *ngIf="!editingEstimateTime && permissionMap?.['UpdateStatusForBuild']"
+            (click)="setActive('status'); BuildUpdate()"
             [ngStyle]="getButtonStyle('status')" [disabled]="selectedTickets.length !== 1">
             Update Status for Build
             </button>
 
 
     </div>
-        <div class="page">
+        <div class="page" *ngIf="!editingEstimateTime">
             <div>
                 <p-paginator
+                    #paginator
                     (onPageChange)="onPageChange($event)"
                     [first]="first"
                     [rows]="pageSize" 
@@ -392,33 +396,33 @@
     </div>
 
 
-<p-dialog [modal]="true" [(visible)]="updateBuild" [style]="{ width: '24rem' }" [resizable]="false" [draggable]="false">
-    <div style="display: flex; justify-content: center; ">
-        <i class="pi pi-question"></i>
-    </div>
-    <p style="text-align: center;">Do you want to Update Status for Build?..</p>
-    <div class="builtUpdate">
-        <button class="cancel" (click)="cancelBuild()">No</button>
-        <button class="save" (click)="updateBuildStatus()">Yes</button>
-    </div>
-</p-dialog>
+    <p-dialog [modal]="true" [(visible)]="updateBuild" [style]="{ width: '22rem' }" [resizable]="false" [draggable]="false">
+        <div style="display: flex; justify-content: center; ">
+            <i class="pi pi-question"></i>
+        </div>
+        <p style="text-align: center; color: #000000;">Do you want to Update Status for Build?..</p>
+        <div class="builtUpdate">
+            <button class="cancel" (click)="cancelBuild()">No</button>
+            <button class="save" (click)="updateBuildStatus()">Yes</button>
+        </div>
+    </p-dialog>
 
-<p-dialog [modal]="true" [(visible)]="showReleaseDialog" [style]="{ width: '24rem' }" [resizable]="false" [draggable]="false">
-    <p>Update Release Tag Value</p>
-    <input class="tag-input" [(ngModel)]="releaseTagValue"/>
-    <div class="builtUpdate">
-        <button class="cancel" (click)="cancelBuild()">Cancle</button>
-        <button class="save" [ngStyle]="{ background: releaseTagValue.length > 0 ? '#3B82F6': 'grey'}" (click)="confirmReleaseTag()" [disabled]="!releaseTagValue.length">Proceed</button>
-    </div>
-</p-dialog>
+    <p-dialog [modal]="true" [(visible)]="showReleaseDialog" [style]="{ width: '22rem' }" [resizable]="false" [draggable]="false">
+        <p style="color: black;">Update Release Tag Value</p>
+        <input class="tag-input" [(ngModel)]="releaseTagValue"/>
+        <div class="builtUpdate">
+            <button class="cancel" (click)="cancelBuild()">Cancle</button>
+            <button class="save" [ngStyle]="{ background: releaseTagValue.length > 0 ? '#3B82F6': 'grey', cursor: releaseTagValue.length > 0 ? 'pointer': 'not-allowed' }" (click)="confirmReleaseTag()" [disabled]="!releaseTagValue.length">Proceed</button>
+        </div>
+    </p-dialog>
 
-<p-dialog [modal]="true" [(visible)]="updateStoryPoint" [style]="{ width: '24rem' }" [resizable]="false" [draggable]="false">
-    <div style="display: flex; justify-content: center; ">
-        <i class="pi pi-question"></i>
-    </div>
-    <p style="text-align: center;">Do you want to Update Story Point?..</p>
-    <div class="builtUpdate">
-        <button class="cancel" (click)="cancelBuild()">No</button>
-        <button class="save" (click)=updateStoryPoints()>Yes</button>
-    </div>
-</p-dialog>
+    <p-dialog [modal]="true" [(visible)]="updateStoryPoint" [style]="{ width: '22rem' }" [resizable]="false" [draggable]="false">
+        <p style="color: black;">Update Story Point Value</p>
+        <input class="tag-input" [(ngModel)]="storyPointValue" type="number"/>
+        <div class="builtUpdate">
+            <button class="cancel" (click)="cancelBuild()">Cancle</button>
+            <button class="save" [ngStyle]="{ background: storyPointValue ? '#3B82F6' : 'grey', cursor: storyPointValue ? 'pointer' : 'not-allowed'}" (click)="confirmStoryPoint()" [disabled]="!storyPointValue">
+  Proceed
+</button>
+        </div>
+    </p-dialog>

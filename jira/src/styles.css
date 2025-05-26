@@ -3,11 +3,12 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
-html body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html body { margin: 0 }
 
 body {
     background-color: #ecf0f1;
     overflow: hidden;
+    color: #000000;
 }
 
 .dashboard-expanded {

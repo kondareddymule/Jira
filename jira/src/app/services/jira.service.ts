@@ -26,22 +26,25 @@ export class JiraService {
     }
 
     getAllUser() {
-      return this.db.object<{[key: string]: any}>('users')
-      .valueChanges()
-      .pipe(
-        map(data => {
-          if(data) {
-            return Object.values(data)
-          } else {
-            return []
-          }
-          }
-        ),
-        catchError(error => {
-          console.error("Error fetching Users: ", error);
-          return of([]);
-        }))
+      return this.db.list('users')
+        .snapshotChanges()
+        .pipe(
+          map(changes =>
+            changes
+              .map(c => ({
+                userId: c.payload.key,
+                ...c.payload.val() as any
+              }))
+              .filter(user => user.userType === 'User')
+          ),
+          catchError(error => {
+            console.error("Error fetching Users: ", error);
+            return of([]);
+          })
+        );
     }
+
+
 
     getAllBuildHistory() {
       return this.db.object<{[key: string]: any}>('BuildHistory')
@@ -63,6 +66,7 @@ export class JiraService {
 
 
     updateBuildStatus(tickets: any[], buildSequence: string, utcDateTime: string) {
+      console.log(tickets)
       const updates = tickets.map(ticket => {
         const newStatus = ticket.jiraType?.toLowerCase() === 'bug' ? 'Inbuilt' : 'Deployed';
         const updateType = ticket.jiraType?.toLowerCase() === "bug" ? 'Bug' : 'Story';
@@ -86,10 +90,8 @@ export class JiraService {
     }
 
 
-    updateStoryPoints(tickets: any[]) {
+    updateStoryPoints(tickets: any[], storyPoint: number) {
     const updates = tickets.map(ticket => {
-      const estimate = parseFloat(ticket.estimateTime);
-      const storyPoint = isNaN(estimate) ? 0 : Math.ceil(estimate / 4);
       return this.db.object(`JiraTickets/${ticket.ticketId}`).update({
         storyPoint: storyPoint
       });
@@ -120,5 +122,38 @@ export class JiraService {
   }
 
 
+  updateUserPermission(userId: string, updates: any) {
+    return this.db.object(`users/${userId}`).update(updates);
+  }
+
+
+  getSettings() {
+    return this.db.list('Settings').snapshotChanges().pipe(
+      map(changes => {
+        if (changes.length > 0) {
+          const c = changes[0];
+          return {
+            key: c.payload.key,
+            ...(c.payload.val() as any)
+          };
+        } else {
+          return null;
+        }
+      }),
+      catchError(err => {
+        console.error('Error fetching settings:', err);
+        return of(null);
+      })
+    );
+  }
+
+
+    saveOrUpdateSettings(key: string | null, settings: { authorizationToken: string; baseUrl: string }) {
+    if (key) {
+      return this.db.object(`Settings/${key}`).update(settings);
+    } else {
+      return this.db.list('Settings').push(settings);
+    }
+  }
 
 }

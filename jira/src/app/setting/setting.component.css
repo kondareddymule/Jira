@@ -1,8 +1,6 @@
-body {
-    position: absolute;
-    top: 7vh;
-    left: 15vw;
-    margin: 20px;
+.container {
+  margin: 20px;
+  padding-right: 40px;
 }
 
 .inputfield {
@@ -10,7 +8,44 @@ body {
     margin-bottom: 10px;
     width: 20%;
     background-color: #ffffff;
-    border: none;
     height: 40px;
     border-radius: 6px;
+    padding: 10px;
+}
+
+.page {
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  z-index: 1000;
+}
+
+button {
+  height: 50px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 180px;
+  background-color: #3B82F6;
+  color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cancel {
+  height: 40px !important;
+  background-color: #ffffff !important;
+  color: #000000;
+  width: 80px !important;
+  box-shadow: none !important;
+  border: 1px solid #000000;
+}
+.save {
+  height: 40px !important;
+  color: #ffffff;
+  width: 80px !important;
+  box-shadow: none !important;
 }

@@ -1,10 +1,12 @@
-.container {
-    background-color: #ffffff;
+.outer-container {
+    margin: 30px;
 }
 
 
 .container {
     display: flex;
+    background-color: #ffffff;
+    border-radius: 6px;
 }
 
 .left-contianer {
@@ -12,18 +14,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 50vw;
-    background-color: #ffffff;
+    height: 92vh;
+    width: 50vw
 }
 
 .right-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100vh;
+    height: 92vh;
     width: 50vw;
-    background-color: #ffffff;
 }
 
 ::ng-deep .p-inputtext {
@@ -56,4 +56,8 @@
     margin-right: 20%;
     text-decoration: underline;
     cursor: pointer;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px red solid;
 }

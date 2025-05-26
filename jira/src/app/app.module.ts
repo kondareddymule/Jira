@@ -11,6 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 
 import { MessagesModule } from 'primeng/messages';
@@ -75,7 +78,7 @@ import { PaginatorModule } from 'primeng/paginator';
     DialogModule,
     PaginatorModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

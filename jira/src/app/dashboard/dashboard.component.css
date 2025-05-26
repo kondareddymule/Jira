@@ -38,6 +38,7 @@
     display: flex;
     justify-content: flex-end;
     height: 30px;
+    margin-bottom: 10px;
 }
 
 ::ng-deep .custom-tab-padding .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link .p-menuitem-icon {

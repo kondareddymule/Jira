@@ -12,15 +12,14 @@
 }
 
 .table {
-  max-height: 500px;
+  height: 550px;
   overflow: auto;
   border: 1px solid #e0e0e0;
   border-radius: 20px 20px 0 0;
+  background-color: #ffffff;
+  margin-top: 10px;
 }
 
-.table::-webkit-scrollbar {
-  display: none;
-}
 
 .table-container {
   width: 100%;
@@ -42,6 +41,7 @@
 
 .table-container tr:hover {
   background-color: #ecf0f1;
+  cursor: pointer;
 }
 
 .table-container td:hover {
@@ -53,20 +53,23 @@
 .row {
     display: flex;
     gap: 10px;
+    width: 110px
 }
 .column {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .page {
-    position: fixed;
-    bottom: 0;
-    right: 0vw;
-    padding: 10px 20px;
-    display: flex;
-    margin-bottom: 25px;
-    gap: 20px;
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  z-index: 1000;
 }
 
 .horizontalline {
@@ -80,20 +83,21 @@
     margin-top: 10px;
     background: #4d4747;
     width: 25px;
+    cursor: pointer;
 }
 
 ::ng-deep .p-inputswitch .p-inputswitch-slider:before {
-  background: #ffffff;
   width: 0.7rem;
   height: 0.7rem;
   left: 0.1rem;
   margin-top: -0.35rem;
   border-radius: 50%;
   transition-duration: 0.2s;
+  cursor: pointer;
 }
 
 ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-  background: grey;
+  background: #3B82F6
 }
 ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
   left: -8px;
@@ -107,6 +111,7 @@
   border: 1px solid #ccc;
   height: 30px;
   padding-left: 10px;
+  padding-right: 22px;
   box-sizing: border-box;
 }
 .pi-search {
@@ -117,3 +122,175 @@ input[type="search"]::-webkit-search-cancel-button {
   display: none;
   -webkit-appearance: none;
 }
+
+
+
+.pagenumber {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+    align-items: center;
+    height: 160px;
+    width: 120px;
+    background: white;
+    box-shadow: 0px 1px 1px 1px #a99797;
+    border-radius: 6px;
+    z-index: 1000;
+    top: 35px;
+    right: 42px;
+}
+
+.pagenumber div {
+    cursor: pointer;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.active-page-size {
+    background-color: grey;
+    color: #ffffff;
+}
+
+.pageSize {
+  border: 2px solid black;
+  padding: 2px;
+  background-color: #ffffff;
+  font-size: 12px;
+}
+
+::ng-deep .p-paginator {
+    background: #ffffff;
+    color: #6c757d;
+    border: solid #e9ecef;
+    border-width: 0;
+    padding: 0.1rem;
+    border-radius: 6px;
+}
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
+    border: 0 none;
+    color: #6c757d;
+    min-width: 2rem;
+    height: 2rem;
+    margin: 0.1rem;
+    transition: box-shadow 0.2s;
+    border-radius: 0px;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  color: #ffffff;
+  background-color: #3B82F6;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
+  color: #000000;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page[disabled] {
+  color: #6c757d;
+  cursor: not-allowed;
+}
+::ng-deep .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last {
+    border: 0 none;
+    color: #000000;
+    min-width: 2rem;
+    height: 2rem;
+    margin: 0.1rem;
+    transition: box-shadow 0.2s;
+    border-radius: 50%;
+}
+
+::ng-deep .p-paginator .p-paginator-prev {
+    border: 0 none;
+    color: #000000;
+    min-width: 2rem;
+    height: 2rem;
+    margin: 0.1rem;
+    transition: box-shadow 0.2s;
+}
+
+::ng-deep .p-paginator .p-paginator-next {
+    border: 0 none;
+    color: #000000;
+    min-width: 2rem;
+    height: 2rem;
+    margin: 0.1rem;
+    transition: box-shadow 0.2s;
+    border-radius: 50%;
+}
+
+::ng-deep .p-paginator .p-paginator-last {
+    border: 0 none;
+    color: #000000;
+    min-width: 2rem;
+    height: 2rem;
+    margin: 0.1rem;
+    transition: box-shadow 0.2s;
+    border-radius: 50%;
+}
+
+
+::ng-deep .p-paginator .p-paginator-page-input .p-inputtext {
+    max-width: 2rem;
+    height: 2rem;
+    padding: 9px;
+}
+
+.goInput {
+  text-align: center;
+  width: 2rem;
+  height: 2.2rem;
+  border-radius: 6px;
+  border: 1px solid #aab2bc;
+}
+
+.goButton {
+  width: 2rem;
+  height: 2.2rem;
+  background-color: #3B82F6;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+   margin: 0;
+}
+
+.table-container th:nth-child(1),
+.table-container td:nth-child(1) {
+  max-width: 200px;
+  min-width: 200px;
+}
+
+.table-container th:nth-child(2),
+.table-container td:nth-child(2) {
+  max-width: 200px;
+  min-width: 200px;
+}
+
+.table-container th:nth-child(3),
+.table-container td:nth-child(3) {
+  max-width: 200px;
+  min-width: 200px;
+}
+
+
+::ng-deep .p-paginator .p-paginator-first[disabled],
+::ng-deep .p-paginator .p-paginator-prev[disabled],
+::ng-deep .p-paginator .p-paginator-next[disabled],
+::ng-deep .p-paginator .p-paginator-last[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+
+

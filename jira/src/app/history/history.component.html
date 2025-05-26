@@ -1,7 +1,7 @@
 <app-header></app-header>
 <app-dashboard></app-dashboard>
 
-
+<p-toast></p-toast>
 <div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'" class="container">
     <div>
         <div style="display: flex; justify-content: space-between;">
@@ -9,9 +9,15 @@
             <div class="horizontalline"></div>
             <p-inputSwitch [(ngModel)]="checked" (click)="change()"/>
         </div>
-        <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px;">
+        <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px; cursor: pointer;" (click)="togglePage()" #menuToggle>
             <i class="pi pi-bars" style="font-size: 1rem; font-weight: bold;"></i>
-            <span>20</span>
+            <span class="pageSize">{{ pageSize }}</span>
+
+            <div class="pagenumber" *ngIf="showpage" #menuDropdown>
+                <div (click)="updatePageSize(20)" [ngClass]="{ 'active-page-size': pageSize === 20 }">Show 20</div>
+                <div (click)="updatePageSize(30)" [ngClass]="{ 'active-page-size': pageSize === 30 }">Show 30</div>
+                <div (click)="updatePageSize(40)" [ngClass]="{ 'active-page-size': pageSize === 40 }">Show 40</div>
+            </div>
         </div>
     </div>
         
@@ -20,38 +26,60 @@
             <thead>
                 <tr>
                 <th>
-                    <div class="row">
-                    <div>
-                        <span>Bill Sequence</span>
-                    </div>
-                    <span>
-                    <div class="column">
-                        <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'ticketId' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('ticketId', 'asc')"></i>
-                        <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'ticketId' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('ticketId', 'desc')"></i>
-                    </div>
-                    </span>
+                    <div class="row" (click)="toggleSort('sequence')">
+                        <div>
+                            <span>Sequence</span>
+                        </div>
+
+                        <div class="column">
+                            <i 
+                            *ngIf="sortColumn !== 'sequence' || sortDirection === 'asc'"
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'sequence' && sortDirection === 'asc' ? 'black' : 'gray' }">
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'sequence' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'sequence' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
+                        </div>
                     </div>
                     <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                     <input type="search"
-                        class="searchIcon" [(ngModel)]="columnSearch.ticketId" (ngModelChange)="filterTickets()"/>
+                        class="searchIcon" [(ngModel)]="columnSearch.sequence" (ngModelChange)="filterTickets()"/>
                         <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
                     </div>
                 </th>
                     <th>
-                        <div class="row">
+                        <div class="row" (click)="toggleSort('timestamp')">
                         <div>
-                            <span>DateTime</span>
+                            <span>Date</span>
                         </div>
-                        <span>
+
                         <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'status' && sortDirection === 'asc' ? 'black' : 'gray'}" (click)="sortBy('status', 'asc')"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem" [ngStyle]="{color: sortColumn === 'status' && sortDirection === 'desc' ? 'black' : 'gray'}" (click)="sortBy('status', 'desc')"></i>
+                            <i 
+                            
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            *ngIf="sortColumn !== 'timestamp' || sortDirection === 'asc'"
+                            [ngStyle]="{ color: sortColumn === 'timestamp' && sortDirection === 'asc' ? 'black' : 'gray' }"
+                            >
+                            </i>
+
+                            <i 
+                            *ngIf="sortColumn !== 'timestamp' || sortDirection === 'desc'"
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'timestamp' && sortDirection === 'desc' ? 'black' : 'gray' }">
+                            </i>
                         </div>
-                        </span>
-                        </div>
+                    </div>
                         <div style="position: relative; margin-top: 10px;" *ngIf="searchIcon">
                         <input type="search"
-                            class="searchIcon" [(ngModel)]="columnSearch.status" (ngModelChange)="filterTickets()"/>
+                            class="searchIcon" [(ngModel)]="columnSearch.date" (ngModelChange)="filterTickets()"/>
                             <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute;top: 7px; left: 80px;"></i>
                         </div>
                     </th>
@@ -59,20 +87,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let ticket of filteredTickets">
+                <tr *ngFor="let ticket of pagedTickets">
                     <td>{{ticket.sequence}}</td>
                     <td>{{ticket.timestamp | date}}</td>
                     <td><a [routerLink]="['/ticket', ticket.tickets[0]]" target="_blank" >{{ticket.tickets[0]}}</a></td>
                 </tr>
             </tbody>
         </table>
-    </div>
         <div class="page">
-        <i class="pi pi-angle-left" style="font-size: 1rem"></i>
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-        <i class="pi pi-angle-right" style="font-size: 1rem"></i>
+            <div>
+                <p-paginator
+                    #paginator
+                    (onPageChange)="onPageChange($event)"
+                    [first]="first"
+                    [rows]="pageSize" 
+                    [totalRecords]="totalRecords"
+                    [pageLinkSize]="3"
+
+                />
+           </div>
+           <input type="number" class="goInput" [(ngModel)]="goInputText"/>
+           <button class="goButton" (click)="gotoPage()">Go</button>
+        </div>
     </div>
     </div>
 </div >

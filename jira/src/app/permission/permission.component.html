@@ -1,71 +1,137 @@
 <app-header></app-header>
 <app-dashboard></app-dashboard>
 
-
+<p-toast></p-toast>
 <div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'" class="container">
+    <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px; cursor: pointer; justify-content: flex-end; margin-bottom: 10px;" >
+            <div (click)="togglePage()" #menuToggle style="display: flex; align-items: center; gap: 5px;">
+            <i class="pi pi-bars" style="font-size: 1rem; font-weight: bold;"></i>
+            <span class="pageSize">{{ pageSize }}</span>
+
+            <div class="pagenumber" *ngIf="showpage" #menuDropdown>
+                <div (click)="updatePageSize(20)" [ngClass]="{ 'active-page-size': pageSize === 20 }">Show 20</div>
+                <div (click)="updatePageSize(30)" [ngClass]="{ 'active-page-size': pageSize === 30 }">Show 30</div>
+                <div (click)="updatePageSize(40)" [ngClass]="{ 'active-page-size': pageSize === 40 }">Show 40</div>
+            </div>
+            </div>
+    </div>
     <div class="table">
         <table class="table-container">
             <thead>
                 <tr>
-                    <th>
-                        <div class="row">
-                        <div>
-                            <span>Name</span>
-                        </div>
-                        <span>
-                        <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
-                        </div>
-                        </span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="row">
-                        <div>
-                            <span>Email</span>
-                        </div>
-                        <span>
-                        <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
-                        </div>
-                        </span>
+                    <th rowspan="2">
+                        <div class="row" (click)="toggleSort('name')">
+                            <div><span>Name</span></div>
+                            <div class="column">
+                            <i 
+                                class="pi pi-sort-up-fill" 
+                                style="font-size: 0.5rem"
+                                [ngStyle]="{ color: sortColumn === 'name' && sortDirection === 'asc' ? 'black' : 'gray' }"
+                                *ngIf="sortColumn !== 'name' || sortDirection === 'asc'">
+                            </i>
+                            <i 
+                                class="pi pi-sort-down-fill" 
+                                style="font-size: 0.5rem"
+                                [ngStyle]="{ color: sortColumn === 'name' && sortDirection === 'desc' ? 'black' : 'gray' }"
+                                *ngIf="sortColumn !== 'name' || sortDirection === 'desc'">
+                            </i>
+                            </div>
                         </div>
                     </th>
-                    <th>Update Estimate Time</th>
+
+                    <th rowspan="2">
+                    <div class="row" (click)="toggleSort('emailId')">
+                        <div><span>Email</span></div>
+                        <div class="column">
+                        <i 
+                            class="pi pi-sort-up-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'emailId' && sortDirection === 'asc' ? 'black' : 'gray' }"
+                            *ngIf="sortColumn !== 'emailId' || sortDirection === 'asc'">
+                        </i>
+                        <i 
+                            class="pi pi-sort-down-fill" 
+                            style="font-size: 0.5rem"
+                            [ngStyle]="{ color: sortColumn === 'emailId' && sortDirection === 'desc' ? 'black' : 'gray' }"
+                            *ngIf="sortColumn !== 'emailId' || sortDirection === 'desc'">
+                        </i>
+                        </div>
+                    </div>
+                    </th>
+
+                    <th colspan="5" style="text-align: center; font-weight: bold; border-bottom: 0.5px solid grey; border-left: 0.5px solid grey; border-right: 0.5px solid grey;">
+                        Permission
+                    </th>
+
+                    <th rowspan="2">
+                        <div class="row" (click)="toggleSort('status')">
+                            <div><span>Status</span></div>
+                            <div class="column">
+                            <i 
+                                class="pi pi-sort-up-fill" 
+                                style="font-size: 0.5rem"
+                                [ngStyle]="{ color: sortColumn === 'status' && sortDirection === 'asc' ? 'black' : 'gray' }"
+                                *ngIf="sortColumn !== 'status' || sortDirection === 'asc'">
+                            </i>
+                            <i 
+                                class="pi pi-sort-down-fill" 
+                                style="font-size: 0.5rem"
+                                [ngStyle]="{ color: sortColumn === 'status' && sortDirection === 'desc' ? 'black' : 'gray' }"
+                                *ngIf="sortColumn !== 'status' || sortDirection === 'desc'">
+                            </i>
+                            </div>
+                        </div>
+                    </th>
+
+                </tr>
+
+                <tr>
+                    <th style="border-left: 0.5px solid grey;">Update Estimate Time</th>
                     <th>Update Release Tag</th>
                     <th>Update Story Point</th>
                     <th>Update Status for Build</th>
-                    <th>Build History</th>
-                    <th>
-                        <div class="row">
-                        <div>
-                            <span>Status</span>
-                        </div>
-                        <span>
-                        <div class="column">
-                            <i class="pi pi-sort-up-fill" style="font-size: 0.5rem"></i>
-                            <i class="pi pi-sort-down-fill" style="font-size: 0.5rem"></i>
-                        </div>
-                        </span>
-                        </div>
-                    </th>
+                    <th style="border-right: 0.5px solid grey;">Build History</th>
                 </tr>
             </thead>
+
             <tbody>
-                <tr *ngFor="let user of users">
-                    <td pTooltip="{{ user.name }}" tooltipPosition="bottom" class="text-ellipsis">{{user.name}}</td>
+                <tr *ngFor="let user of pagedTickets">
+                    <td 
+                        pTooltip="{{ user.name ? (user.name.charAt(0).toUpperCase() + user.name.slice(1)) : '' }}" 
+                        tooltipPosition="bottom" 
+                        class="text-ellipsis">
+                        {{ user.name ? (user.name.charAt(0).toUpperCase() + user.name.slice(1)) : '' }}
+                    </td>
                     <td pTooltip="{{ user.emailId }}" tooltipPosition="bottom" class="text-ellipsis">{{user.emailId}}</td>
-                    <td><p-checkbox [binary]="true" [(ngModel)]="user.permissionMap.UpdateEstimateTime" /></td>
-                    <td><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.UpdateReleaseTag" /></td>
-                    <td><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.UpdateStatusForBuild" /></td>
-                    <td><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.UpdateStoryPoint" /></td>
-                    <td><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.BuildHistory" /></td>
-                    <td>{{user.status}}</td>
+                    <td style="text-align: center;"><p-checkbox [binary]="true" [(ngModel)]="user.permissionMap.UpdateEstimateTime" /></td>
+                    <td style="text-align: center;"><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.UpdateReleaseTag" /></td>
+                    <td style="text-align: center;"><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.UpdateStoryPoint" /></td>
+                    <td style="text-align: center;"><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.UpdateStatusForBuild" /></td>
+                    <td style="text-align: center;"><p-checkbox [binary]="true"  [(ngModel)]="user.permissionMap.BuildHistory" /></td>
+                    <td>
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                        <span [ngStyle]="{ background: user.status === 'Active' ? '#cfebcd' : '#ecf0f1'}" style="padding: 5px; border-radius: 6px; width: 80px; text-align: center;" (click)="toggleStatus(user)">{{user.status}}</span>
+                        <span><i class="pi pi-save" style="font-size: 1rem; margin-left: 10px;" (click)="saveUserPermissions(user)"></i></span>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
+        <div class="page">
+            <div>
+                <p-paginator
+                    #paginator
+                    (onPageChange)="onPageChange($event)"
+                    [first]="first"
+                    [rows]="pageSize" 
+                    [totalRecords]="totalRecords"
+                    [pageLinkSize]="3"
+
+                />
+           </div>
+           <input type="number" class="goInput" [(ngModel)]="goInputText"/>
+           <button class="goButton" (click)="gotoPage()">Go</button>
+        </div>
     </div>
 </div>
 
