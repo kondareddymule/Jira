@@ -466,7 +466,7 @@ export class ActionComponent {
         this.currentPage = pageNum;
         this.updatePagedTickets();
       } else {
-        this.message.add({ severity: 'error', summary: 'Error', detail: 'Page Number Does Not Exist' });
+        this.message.add({ severity: 'error', summary: 'Error', detail: 'Page Number Does Not Exist', life: 500000 });
       }
 
       this.goInputText = '';

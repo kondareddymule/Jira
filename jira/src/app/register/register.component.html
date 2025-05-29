@@ -5,12 +5,12 @@
     <div class="container">
         
         <div class="left-contianer">
-            <p-image src="../../assets/logo.png" alt="logo"></p-image>
-            <h2 style="color: #3498db;">UCBOS JIRA BUILD MANAGEMENT</h2>
-            <p style="font-weight: bold;">Tool for better management teamwork collaboration</p>
+            <img src="../../assets/logo.png" alt="logo" class="image" />
+            <h2 style="color: #3498db;" class="heading">UCBOS JIRA BUILD MANAGEMENT</h2>
+            <p style="font-weight: bold;" class="para">Tool for better management teamwork collaboration</p>
         </div>
         <div class="right-container">
-            <h1>Create Account</h1>
+            <h1 >Create Account</h1>
             <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" class="formgroup">
                 <label>Name</label><br>
                 <input type="text" pInputText name="name" [(ngModel)]="user.name" required #name="ngModel"/><br>

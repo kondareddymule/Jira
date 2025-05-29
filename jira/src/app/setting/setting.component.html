@@ -12,7 +12,7 @@
         class="inputfield"
         [ngStyle]="{display: !isEditMode ? 'none':'flex'}"
       />
-      <p *ngIf="!isEditMode" style="overflow-wrap: break-word;">{{authorizationToken}}</p>
+      <p *ngIf="!isEditMode" style="overflow-wrap: break-word;" class="ellipsis-paragraph">{{authorizationToken}}</p>
     </div>
 
     <div>

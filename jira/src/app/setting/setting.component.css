@@ -49,3 +49,68 @@ button {
   width: 80px !important;
   box-shadow: none !important;
 }
+
+@media screen and (max-width: 320px) {
+      .dashboard-expanded {
+        position: static !important;
+        left: 15vw;
+        top: 15vh;
+        width: calc(100vw - 15vw);
+        margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: static !important;
+      left: 5vw;
+      top: 7vh;
+      width: calc(100vw - 5vw);
+      margin-left: 20px;
+    }
+
+    .container {
+      margin: 20px;
+      padding-right: 0px !important;
+    }
+    .page {
+      position: absolute;
+      bottom: 0;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 20px;
+      z-index: 1000;
+      margin-top: 10px;
+      padding-right: 15px;
+    }
+
+    .cancel {
+      height: 40px !important;
+      background-color: #ffffff !important;
+      color: #000000;
+      width: 127px !important;
+      box-shadow: none !important;
+      border: 1px solid #000000;
+    }
+    .save {
+      height: 40px !important;
+      color: #ffffff;
+      width: 127px !important;
+      box-shadow: none !important;
+    }
+    .inputfield {
+      width: 100%;
+    }
+
+    .ellipsis-paragraph {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
+}
+
+
+
+

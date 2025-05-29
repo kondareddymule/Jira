@@ -1,6 +1,6 @@
 <div class="container">
   <div class="logo-container">
-    <p-image src="../../assets/logo.png" alt="logo" width="50" height="50"></p-image>
+    <img src="../../assets/logo.png" alt="logo" class="logo"/>
   </div>
   <div class="right-container">
     <span 
@@ -9,9 +9,10 @@
         {{ userName ? (userName.charAt(0).toUpperCase() + userName.slice(1)) : '' }}
       </span>
 
-    <img src="../../assets/Account.jpg" alt="profile" width="50" height="50" class="profile" />
+    <img src="../../assets/Account.jpg" alt="profile" class="profile" />
     <div >
       <button (click)="logout()" class="logout">LOGOUT</button>
+      <i class="pi pi-sign-out logoutIcon" (click)="logout()" ></i>
     </div>
   </div>
 </div>

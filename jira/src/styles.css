@@ -11,6 +11,12 @@ body {
     color: #000000;
 }
 
+@media screen and (max-width: 320px) {
+    body {
+        overflow: auto !important;
+    }
+}
+
 .dashboard-expanded {
   position: absolute;
   left: 15vw;

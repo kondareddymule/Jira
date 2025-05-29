@@ -17,7 +17,7 @@
                 [(ngModel)]="currentInput"
                 (keydown)="onKeyDown($event)"
             />
-            <i class="pi pi-search" style="font-size: 1rem; cursor: pointer; position: absolute; top: 14px; right: 60px;"></i>
+            <i class="pi pi-search searchticket"></i>
     </div>
     </div>
     <div style="display: flex; justify-content: space-between;">
@@ -338,6 +338,20 @@
             </tbody>
           </table>
     </div>
+    <div class="page" *ngIf="!editingEstimateTime">
+            <div>
+                <p-paginator
+                    #paginator
+                    (onPageChange)="onPageChange($event)"
+                    [first]="first"
+                    [rows]="pageSize" 
+                    [totalRecords]="totalRecords"
+                    [pageLinkSize]="3"
+                />
+           </div>
+            <input type="number" class="goInput" [(ngModel)]="goInputText"/>
+            <button class="goButton" (click)="gotoPage()">Go</button>
+        </div>
     <div style="display: flex;">
     <div class="buttons">
 
@@ -378,7 +392,7 @@
 
 
     </div>
-        <div class="page" *ngIf="!editingEstimateTime">
+        <!-- <div class="page" *ngIf="!editingEstimateTime">
             <div>
                 <p-paginator
                     #paginator
@@ -391,7 +405,7 @@
            </div>
            <input type="number" class="goInput" [(ngModel)]="goInputText"/>
            <button class="goButton" (click)="gotoPage()">Go</button>
-        </div>
+        </div> -->
         </div>
     </div>
 
@@ -422,7 +436,7 @@
         <div class="builtUpdate">
             <button class="cancel" (click)="cancelBuild()">Cancle</button>
             <button class="save" [ngStyle]="{ background: storyPointValue ? '#3B82F6' : 'grey', cursor: storyPointValue ? 'pointer' : 'not-allowed'}" (click)="confirmStoryPoint()" [disabled]="!storyPointValue">
-  Proceed
-</button>
+            Proceed
+            </button>
         </div>
     </p-dialog>

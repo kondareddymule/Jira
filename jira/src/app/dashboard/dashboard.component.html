@@ -1,4 +1,4 @@
-<div [ngClass]="visible ? 'container' : 'small-container'">
+<div [ngClass]="visible ? 'container' : 'small-container'" class="small-device">
     <div class="rightArrow">
         <i class="pi" [ngClass]="visible ? 'pi-angle-left' : 'pi-angle-right'" 
            style="display: flex; align-items: center; background-color: white; border-radius: 50%; margin-top: 10px; cursor: pointer; margin-right: 10px;" 
@@ -9,3 +9,6 @@
     </div>
 </div>
 
+<div class="card" [ngClass]="{ 'custom-tab-padding': !visible }" class="device">
+    <p-tabMenu [model]="visible ? items : items"></p-tabMenu>
+</div>

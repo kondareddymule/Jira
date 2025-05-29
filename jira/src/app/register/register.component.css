@@ -57,3 +57,125 @@
 input.ng-invalid.ng-touched {
     border: 1px red solid;
 }
+
+
+
+@media screen and (max-width: 320px) {
+    .outer-container {
+        margin: 20px !important;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        border-radius: 6px;
+    }
+    .left-contianer {
+        height: auto !important;
+        width: auto !important;
+        text-align: center;
+    }
+    .image {
+        height: 100% !important;
+        width: 100% !important;
+        border-radius: 6px;
+    }
+    .right-container {
+        height: auto !important;
+        width: auto !important;
+        margin: 10px !important;
+        
+    }
+    .heading {
+        font-size: 14px;
+        margin: 5px
+    }
+    .para {
+        font-size: 12px;
+        margin: 5px
+    }
+    .label {
+        text-align: left;
+    }
+    .createButton {
+        margin-right: 0px;
+    }
+
+    .forgot {
+        display: flex;
+        flex-direction: column;
+    }
+    ::ng-deep .p-inputtext {
+        width: 100% !important;
+    }
+    ::ng-deep .p-button {
+     width: 100% !important;
+    }
+    .signIn {
+        text-align: center;
+        margin: 5px;
+    }
+    .forgotpassword {
+        margin-top: 10px;
+    }
+    
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        overflow: scroll;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        border-radius: 6px;
+    }
+    .left-contianer {
+        height: auto;
+        width: auto;
+        text-align: center;
+    }
+    .right-container {
+        height: auto;
+        width: auto;
+        margin-left: 100px;
+        margin-right: 100px;
+        
+    }
+    .image {
+        height: 150px;
+    }
+    .heading {
+        font-size: 14px;
+        margin: 5px
+    }
+    .para {
+        font-size: 12px;
+        margin: 5px
+    }
+    .label {
+        text-align: left;
+    }
+    .createButton {
+        margin-right: 0px;
+        margin-bottom: 30px;
+    }
+
+    .forgot {
+        display: flex;
+        flex-direction: column;
+    }
+    ::ng-deep .p-inputtext {
+        width: 100% !important;
+    }
+    ::ng-deep .p-button {
+     width: 100% !important;
+    }
+    .signIn {
+        text-align: center;
+        margin: 5px;
+    }
+    .forgotpassword {
+        margin-top: 10px;
+    }
+
+}

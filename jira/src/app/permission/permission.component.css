@@ -60,6 +60,7 @@ table::-webkit-scrollbar {
 .column {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .text-ellipsis {
@@ -226,5 +227,118 @@ input[type=number]::-webkit-inner-spin-button {
   opacity: 0.5;
   cursor: not-allowed !important;
   pointer-events: none !important;
+}
+
+@media screen and (max-width: 320px) {
+      .dashboard-expanded {
+        position: static !important;
+        left: 15vw;
+        top: 15vh;
+        width: calc(100vw - 15vw);
+        margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: static !important;
+      left: 5vw;
+      top: 7vh;
+      width: calc(100vw - 5vw);
+      margin-left: 20px;
+    }
+
+    .container {
+      margin: 20px;
+      padding-right: 0px !important;
+    }
+
+    .page {
+      position: static;
+      bottom: 0;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 20px;
+      z-index: 1000;
+      margin-top: 10px;
+    }
+
+    button {
+      height: 50px;
+      font-size: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 130px;
+      background-color: #3B82F6;
+      color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .buttons {
+      position: static;
+      bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 11px;
+      z-index: 1000;
+    }
+
+    ::ng-deep .p-paginator .p-paginator-prev {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+    }
+
+    ::ng-deep .p-paginator .p-paginator-next {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+        border-radius: 50%;
+    }
+
+    ::ng-deep .p-paginator .p-paginator-last {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+        border-radius: 50%;
+    }
+    ::ng-deep .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+        border-radius: 50%;
+    }
+
+    .searchticket {
+      font-size: 1rem;
+      cursor: pointer;
+      position: absolute;
+      top: 294px;
+      right: 40px;
+    }
+
+    .pagenumber {
+        top: 330px !important;
+        right: 30px !important;
+    }
+
+    .table-container th,
+    .table-container td {
+      padding-left: 15px !important;
+    }
+
 }
 

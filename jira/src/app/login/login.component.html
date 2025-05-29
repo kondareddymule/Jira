@@ -1,32 +1,31 @@
 <p-toast></p-toast>
-
 <div class="outer-container">
     <div>
         <div class="container">
             <div class="left-contianer">
-                <p-image src="../../assets/logo.png" alt="logo"></p-image>
-                <h2 style="color: #3498db;">UCBOS JIRA BUILD MANAGEMENT</h2>
-                <p style="font-weight: bold;">Tool for better management teamwork collaboration</p>
+                <img src="../../assets/logo.png" alt="logo" class="image"/>
+                <h2 style="color: #3498db;" class="heading">UCBOS JIRA BUILD MANAGEMENT</h2>
+                <p style="font-weight: bold;" class="para">Tool for better management teamwork collaboration</p>
             </div>
             <div class="right-container">
                 <h1>Sign In</h1>
                 <form #loginForm="ngForm" (ngSubmit)="login()" novalidate>
-                        <label>Email</label><br>
+                        <label class="label">Email</label><br>
                         <input type="email" pInputText [(ngModel)]="email" name="email" required #emailRef="ngModel"/><br>
                         <div *ngIf="emailRef.invalid && emailRef.touched" class="error">* Email is required</div>
 
-                        <label>Password</label><br>
+                        <label class="label">Password</label><br>
                         <input type="password" pInputText [(ngModel)]="password" name="password" required minlength="8" #passwordRef="ngModel"/><br>
                         <div *ngIf="passwordRef.invalid && passwordRef.touched" class="error">* Password is required (min 8 characters)</div>
                         <p-button type="submit" label="Login"></p-button>
 
-                    <div style="display: flex; margin-right: 20%; justify-content: space-between; margin-top: 10px;">
+                    <div class="forgot">
                         <div >
                             <p-checkbox [binary]="true" inputId="binary"/>
                             <label style="margin-left: 10px;">Remember Me</label>
                         </div>
                         <div>
-                            <p style="margin: 4px;">Forgot Password?</p>
+                            <p class="forgotpassword">Forgot Password?</p>
                         </div>
                     </div>
                     <div>
