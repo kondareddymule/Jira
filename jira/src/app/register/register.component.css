@@ -110,14 +110,12 @@ input.ng-invalid.ng-touched {
     ::ng-deep .p-button {
      width: 100% !important;
     }
-    .signIn {
-        text-align: center;
-        margin: 5px;
-    }
     .forgotpassword {
         margin-top: 10px;
     }
-    
+    .mediumDevice {
+        display: block !important;
+    } 
 }
 
 @media screen and (max-width: 768px) {
@@ -171,11 +169,19 @@ input.ng-invalid.ng-touched {
      width: 100% !important;
     }
     .signIn {
-        text-align: center;
-        margin: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
     .forgotpassword {
         margin-top: 10px;
     }
+    .mediumDevice {
+        display: flex;
+        justify-content: space-between;
+    }
+    .loginbutton {
+        margin-bottom: 70px;
+    }
 
 }
+

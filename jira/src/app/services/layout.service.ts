@@ -8,6 +8,7 @@ export class LayoutService {
   private sidebarVisible = new BehaviorSubject<boolean>(true);
   sidebarVisible$ = this.sidebarVisible.asObservable();
 
+
   toggleSidebar() {
     const newState = !this.sidebarVisible.value;
     this.sidebarVisible.next(newState);

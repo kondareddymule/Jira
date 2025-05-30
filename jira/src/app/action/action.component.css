@@ -29,7 +29,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .table {
-  height: 500px;
+  height: 440px;
   overflow: auto;
   border: 1px solid #e0e0e0;
   border-radius: 20px 20px 0 0;
@@ -454,7 +454,7 @@ input[type=number]::-webkit-inner-spin-button {
 
     .container {
       margin: 20px;
-      padding-right: 0px;
+      padding-right: 0px !important;
     }
 
     .buttons {
@@ -539,9 +539,9 @@ input[type=number]::-webkit-inner-spin-button {
     .searchticket {
       font-size: 1rem;
       cursor: pointer;
-      position: absolute;
-      top: 294px;
-      right: 40px;
+      position: absolute !important;
+      top: 294px !important;
+      right: 40px !important;
     }
 
     .pagenumber {
@@ -559,7 +559,7 @@ input[type=number]::-webkit-inner-spin-button {
       position: absolute;
       left: 20vw;
       top: 7vh;
-      width: calc(100vw - 20vw);
+      width: calc(100vw - 23vw);
       margin-left: 20px;
     }
 
@@ -567,8 +567,13 @@ input[type=number]::-webkit-inner-spin-button {
       position: absolute;
       left: 10vw;
       top: 7vh;
-      width: calc(100vw - 10vw);
+      width: calc(100vw - 13vw);
       margin-left: 20px;
+    }
+
+    .container {
+      margin: 20px;
+      padding-right: 20px;
     }
 
     .buttons {
@@ -582,9 +587,10 @@ input[type=number]::-webkit-inner-spin-button {
       justify-content: flex-end; 
       margin-top: 10px;
       margin-bottom: 10px !important;
+      right: 20px;
     }
     .table {
-      height: 375px; 
+      height: 375px !important; 
     }
     button {
     height: 50px;
@@ -597,5 +603,66 @@ input[type=number]::-webkit-inner-spin-button {
     color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
+  .searchticket {
+    font-size: 1rem;
+    cursor: pointer;
+    position: absolute;
+    top: 14px;
+    right: 40px;
+
+  }
 
 }
+
+
+/* @media screen and (max-width: 1024px) {
+  .dashboard-expanded {
+      position: absolute;
+      left: 20vw;
+      top: 7vh;
+      width: calc(100vw - 23vw);
+      margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: absolute;
+      left: 10vw;
+      top: 7vh;
+      width: calc(100vw - 13vw);
+      margin-left: 20px;
+    }
+    .container {
+      margin: 20px;
+      padding-right: 20px;
+    }
+
+    .table {
+        height: 575px; 
+    }
+    .page {
+      position: static !important;
+      display: flex;
+      justify-content: flex-end; 
+      margin-top: 10px;
+      margin-bottom: 10px !important;
+      right: 20px;
+    }
+
+    button {
+    height: 50px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 136px;
+    background-color: #3B82F6;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .buttons {
+      position: static !important;
+      gap: 10px !important;
+    }
+
+
+} */

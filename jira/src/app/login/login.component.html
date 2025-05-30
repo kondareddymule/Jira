@@ -8,7 +8,7 @@
                 <p style="font-weight: bold;" class="para">Tool for better management teamwork collaboration</p>
             </div>
             <div class="right-container">
-                <h1>Sign In</h1>
+                <h1 class="signIn">Sign In</h1>
                 <form #loginForm="ngForm" (ngSubmit)="login()" novalidate>
                         <label class="label">Email</label><br>
                         <input type="email" pInputText [(ngModel)]="email" name="email" required #emailRef="ngModel"/><br>

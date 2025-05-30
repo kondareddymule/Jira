@@ -62,7 +62,10 @@ input.ng-invalid.ng-touched {
 }
 
 .forgot {
-    display: flex; margin-right: 20%; justify-content: space-between; margin-top: 10px;
+    display: flex; 
+    margin-right: 20%; 
+    justify-content: space-between; 
+    margin-top: 10px;
 }
 
 .forgotpassword {
@@ -119,12 +122,8 @@ input.ng-invalid.ng-touched {
     ::ng-deep .p-button {
      width: 100% !important;
     }
-    .signIn {
-        text-align: center;
-        margin: 5px;
-    }
     .forgotpassword {
-        margin-top: 10px;
+        margin-top: 10px !important;
     }
     
 }
@@ -163,12 +162,13 @@ input.ng-invalid.ng-touched {
     }
     .createButton {
         margin-right: 0px;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
     }
 
     .forgot {
         display: flex;
-        flex-direction: column;
+        margin-top: 10px;
+        margin-right: 0px;
     }
     ::ng-deep .p-inputtext {
         width: 100% !important;
@@ -176,12 +176,13 @@ input.ng-invalid.ng-touched {
     ::ng-deep .p-button {
      width: 100% !important;
     }
-    .signIn {
-        text-align: center;
-        margin: 5px;
-    }
     .forgotpassword {
-        margin-top: 10px;
+        margin-top: auto;
+    }
+
+    .signIn {
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
 }

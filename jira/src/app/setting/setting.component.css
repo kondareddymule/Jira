@@ -55,7 +55,7 @@ button {
         position: static !important;
         left: 15vw;
         top: 15vh;
-        width: calc(100vw - 15vw);
+        width: calc(100vw - 15vw) !important;
         margin-left: 20px;
     }
 
@@ -63,7 +63,7 @@ button {
       position: static !important;
       left: 5vw;
       top: 7vh;
-      width: calc(100vw - 5vw);
+      width: calc(100vw - 5vw) !important;
       margin-left: 20px;
     }
 
@@ -74,7 +74,7 @@ button {
     .page {
       position: absolute;
       bottom: 0;
-      right: 20px;
+      right: 20px !important;
       display: flex;
       align-items: center;
       gap: 11px;
@@ -111,6 +111,34 @@ button {
     }
 }
 
+@media screen and (max-width: 768px) {
+  .dashboard-expanded {
+      position: absolute;
+      left: 20vw;
+      top: 7vh;
+      width: calc(100vw - 23vw) ;
+      margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: absolute;
+      left: 10vw;
+      top: 7vh;
+      width: calc(100vw - 13vw);
+      margin-left: 20px;
+    }
+    .page {
+      position: fixed;
+      bottom: 0;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      z-index: 1000;
+    }
+
+}
 
 
 

@@ -12,7 +12,7 @@
 }
 
 .table {
-  height: 550px;
+  height: 500px;
   overflow: auto;
   border: 1px solid #e0e0e0;
   border-radius: 20px 20px 0 0;
@@ -411,7 +411,7 @@ input[type=number]::-webkit-inner-spin-button {
       position: absolute;
       left: 20vw;
       top: 7vh;
-      width: calc(100vw - 20vw);
+      width: calc(100vw - 23vw);
       margin-left: 20px;
     }
 
@@ -419,8 +419,13 @@ input[type=number]::-webkit-inner-spin-button {
       position: absolute;
       left: 10vw;
       top: 7vh;
-      width: calc(100vw - 10vw);
+      width: calc(100vw - 13vw);
       margin-left: 20px;
+    }
+
+    .container {
+      margin: 20px;
+      padding-right: 20px;
     }
 
     .buttons {
@@ -431,12 +436,13 @@ input[type=number]::-webkit-inner-spin-button {
     .page {
       position: static !important;
       display: flex;
+      right: 20px !important;
       justify-content: flex-end; 
       margin-top: 10px;
       margin-bottom: 10px !important;
     }
     .table {
-      height: 475px; 
+      height: 475px !important; 
     }
     button {
     height: 50px;
@@ -449,5 +455,41 @@ input[type=number]::-webkit-inner-spin-button {
     color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
+
+  .table-container th,
+    .table-container td {
+      padding-left: 45px;
+    }
+
+}
+
+
+@media screen and (max-width: 1024px) {
+  .dashboard-expanded {
+      position: absolute;
+      left: 20vw;
+      top: 7vh;
+      width: calc(100vw - 23vw);
+      margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: absolute;
+      left: 10vw;
+      top: 7vh;
+      width: calc(100vw - 13vw);
+      margin-left: 20px;
+    }
+    .container {
+      margin: 20px;
+      padding-right: 20px;
+    }
+
+    .table {
+        height: 680px; 
+    }
+    .page {
+      right: 30px;
+    }
 
 }

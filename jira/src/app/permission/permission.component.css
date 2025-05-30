@@ -12,7 +12,7 @@
 }
 
 .table {
-  height: 550px;
+  height: 500px;
   overflow: auto;
   border: 1px solid #e0e0e0;
   border-radius: 20px 20px 0 0;
@@ -234,7 +234,7 @@ input[type=number]::-webkit-inner-spin-button {
         position: static !important;
         left: 15vw;
         top: 15vh;
-        width: calc(100vw - 15vw);
+        width: calc(100vw - 15vw) !important;
         margin-left: 20px;
     }
 
@@ -242,8 +242,9 @@ input[type=number]::-webkit-inner-spin-button {
       position: static !important;
       left: 5vw;
       top: 7vh;
-      width: calc(100vw - 5vw);
+      width: calc(100vw - 5vw) !important;
       margin-left: 20px;
+      padding-right: 20px;
     }
 
     .container {
@@ -341,4 +342,87 @@ input[type=number]::-webkit-inner-spin-button {
     }
 
 }
+
+@media screen and (max-width: 768px) {
+  .dashboard-expanded {
+      position: absolute;
+      left: 20vw;
+      top: 7vh;
+      width: calc(100vw - 23vw);
+      margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: absolute;
+      left: 10vw;
+      top: 7vh;
+      width: calc(100vw - 13vw);
+      margin-left: 20px;
+    }
+    .container {
+      margin: 20px;
+      padding-right: 20px;
+    }
+
+    .buttons {
+      position: static !important;
+      gap: 10px !important;
+    }
+
+    .page {
+      position: static !important;
+      display: flex;
+      justify-content: flex-end;
+      right: 20px !important; 
+      margin-top: 10px;
+      margin-bottom: 10px !important;
+    }
+    .table {
+      height: 475px !important; 
+    }
+    button {
+    height: 50px;
+    font-size: 10px !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 136px;
+    background-color: #3B82F6;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+}
+
+
+/* @media screen and (max-width: 1024px) {
+  .dashboard-expanded {
+      position: absolute;
+      left: 20vw;
+      top: 7vh;
+      width: calc(100vw - 23vw);
+      margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: absolute;
+      left: 10vw;
+      top: 7vh;
+      width: calc(100vw - 13vw);
+      margin-left: 20px;
+    }
+    .container {
+      margin: 20px;
+      padding-right: 20px;
+    }
+
+    .table {
+        height: 680px; 
+    }
+    .page {
+      right: 30px;
+    }
+
+} */
+
 
