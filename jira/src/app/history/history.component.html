@@ -6,10 +6,10 @@
     <div>
         <div style="display: flex; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 5px;">
-            <div class="horizontalline"></div>
+            <!-- <div class="horizontalline"></div> -->
             <p-inputSwitch [(ngModel)]="checked" (click)="change()"/>
         </div>
-        <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px; cursor: pointer;" (click)="togglePage()" #menuToggle>
+        <div style="display: flex; align-items: center; gap: 5px; cursor: pointer;" (click)="togglePage()" #menuToggle>
             <i class="pi pi-bars" style="font-size: 1rem; font-weight: bold;"></i>
             <span class="pageSize">{{ pageSize }}</span>
 

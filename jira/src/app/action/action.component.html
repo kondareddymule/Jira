@@ -26,15 +26,19 @@
             <div class="horizontalline"></div>
             <p-inputSwitch [(ngModel)]="checked" (click)="change()" />
         </div>
-        <div style="margin-top: 6px; display: flex; align-items: center; gap: 5px; cursor: pointer;" (click)="togglePage()" #menuToggle>
-            <i class="pi pi-bars" style="font-size: 1rem; font-weight: bold;"></i>
-            <span class="pageSize">{{ pageSize }}</span>
-
+        <div style="display: flex; gap: 10px; margin-top: 6px;">
+        <button class="addTicket" (click)="addTicektPopup()">Add</button>
+        <div style="display: flex; align-items: center; gap: 10px;" (click)="togglePage()" #menuToggle>
+            <div style="margin-bottom: 6px; display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                <i class="pi pi-bars" style="font-size: 1rem; font-weight: bold;"></i>
+                <span class="pageSize">{{ pageSize }}</span>
+            </div>
             <div class="pagenumber" *ngIf="showpage" #menuDropdown>
                 <div (click)="updatePageSize(20)" [ngClass]="{ 'active-page-size': pageSize === 20 }">Show 20</div>
                 <div (click)="updatePageSize(30)" [ngClass]="{ 'active-page-size': pageSize === 30 }">Show 30</div>
                 <div (click)="updatePageSize(40)" [ngClass]="{ 'active-page-size': pageSize === 40 }">Show 40</div>
             </div>
+        </div>
         </div>
 
     </div>
@@ -305,6 +309,9 @@
                 </tr>
             </thead>
             <tbody >
+              <tr *ngIf="pagedTickets.length === 0">
+                <td colspan="11" style="text-align: center; color: red; font-weight: bold;">No tickets to show</td>
+              </tr>
                 <tr *ngFor="let ticket of pagedTickets">
                   <td>
                     <p-checkbox
@@ -335,6 +342,7 @@
                   <td pTooltip="{{ ticket.releaseTag }}" tooltipPosition="bottom" class="text-ellipsis">{{ ticket.releaseTag }}</td>
                   <td style="width: 110px;">{{ ticket.sprint }}</td>
                 </tr>
+
             </tbody>
           </table>
     </div>
@@ -359,7 +367,7 @@
                 *ngIf="!editingEstimateTime && permissionMap?.['UpdateEstimateTime']"
                 (click)="setActive('estimateTime'); enableEstimateEdit()" 
                 [disabled]="selectedTickets.length <= 0" 
-                [ngStyle]="getButtonStyle('estimateTime')">
+                [ngStyle]="getButtonStyle('estimateTime')" [ngClass]="selectedTickets.length <= 0 ? 'disabled' : 'enabled'">
                 Update Estimated Time
             </button>
 
@@ -372,21 +380,21 @@
             *ngIf="!editingEstimateTime && permissionMap?.['UpdateReleaseTag']"
             (click)="setActive('releaseTag'); openReleaseDialog()"
             [ngStyle]="getButtonStyle('releaseTag')"
-            [disabled]="selectedTickets.length !== 1">
+            [disabled]="selectedTickets.length !== 1" [ngClass]="selectedTickets.length !== 1 ? 'disabled' : 'enabled'">
             Update Release Tag
             </button>
 
             <button
             *ngIf="!editingEstimateTime && permissionMap?.['UpdateStoryPoint']"
             (click)="setActive('storyPoint'); storyPointUpdate()"
-            [ngStyle]="getButtonStyle('storyPoint')" [disabled]="selectedTickets.length !== 1">
+            [ngStyle]="getButtonStyle('storyPoint')" [disabled]="selectedTickets.length !== 1" [ngClass]="selectedTickets.length !== 1 ? 'disabled' : 'enabled'">
             Update Story Point
             </button>
 
             <button
             *ngIf="!editingEstimateTime && permissionMap?.['UpdateStatusForBuild']"
             (click)="setActive('status'); BuildUpdate()"
-            [ngStyle]="getButtonStyle('status')" [disabled]="selectedTickets.length !== 1">
+            [ngStyle]="getButtonStyle('status')" [disabled]="selectedTickets.length !== 1" [ngClass]="selectedTickets.length !== 1 ? 'disabled' : 'enabled'">
             Update Status for Build
             </button>
 
@@ -440,3 +448,206 @@
             </button>
         </div>
     </p-dialog>
+
+
+
+    <p-dialog
+      [(visible)]="addTicket"
+      [modal]="true"
+      [style]="{ width: '30rem', top: '65px' }"
+      [resizable]="false"
+      [draggable]="false"
+    >
+      <div class="custom-dialog-header">
+        <span class="dialog-title">Add Ticket </span>
+        <span class="dialog-close" (click)="closeTicket()">&#10005;</span>
+      </div>
+
+      <form #ticketForm="ngForm" (ngSubmit)="saveTicket(ticketForm)" class="formleft">
+        <div class="formrow">
+          <div>
+            <label for="ticketId">Ticket ID *</label> <br />
+            <input
+              id="ticketId"
+              type="text"
+              [(ngModel)]="ticket.ticketId"
+              name="ticketId"
+              #ticketIdModel="ngModel"
+              class="form-input"
+              required
+            />
+            <div
+              *ngIf="ticketIdModel.invalid && ticketIdModel.touched"
+              class="error"
+            >
+              * Ticket ID is required
+            </div>
+          </div>
+
+          <div>
+            <label for="assignee">Assignee *</label> <br />
+            <input
+              id="assignee"
+              type="text"
+              [(ngModel)]="ticket.assignee"
+              name="assignee"
+              #assigneeModel="ngModel"
+              class="form-input"
+              required
+            />
+            <div
+              *ngIf="assigneeModel.invalid && assigneeModel.touched"
+              class="error"
+            >
+              * Assignee is required
+            </div>
+          </div>
+        </div>
+
+        <div class="formrow">
+          <div>
+            <label for="description">Description *</label> <br />
+            <input
+              id="description"
+              type="text"
+              [(ngModel)]="ticket.description"
+              name="description"
+              #descriptionModel="ngModel"
+              class="form-input"
+              required
+            />
+            <div
+              *ngIf="descriptionModel.invalid && descriptionModel.touched"
+              class="error"
+            >
+              * Description is required
+            </div>
+          </div>
+
+          <div>
+            <label for="estimateTime">Estimate Time *</label> <br />
+            <input
+              id="estimateTime"
+              type="number"
+              [(ngModel)]="ticket.estimateTime"
+              name="estimateTime"
+              #estimateTimeModel="ngModel"
+              class="form-input"
+              required
+            />
+            <div
+              *ngIf="estimateTimeModel.invalid && estimateTimeModel.touched"
+              class="error"
+            >
+              * Estimate Time is required
+            </div>
+          </div>
+        </div>
+
+        <div class="formrow">
+          <div>
+            <label for="jiraType">Jira Type *</label> <br />
+            <p-dropdown
+              [options]="jiraTypes"
+              [(ngModel)]="ticket.jiraType"
+              name="jiraType"
+              #jiraTypeModel="ngModel"
+              placeholder="Select Jira Type"
+            ></p-dropdown>
+            <div *ngIf="!ticket.jiraType && jiraTypeTouched" class="error">
+              * Jira Type is required
+            </div>
+          </div>
+
+          <div>
+            <label for="releaseTag">Release Tag *</label> <br />
+            <input
+              id="releaseTag"
+              type="text"
+              [(ngModel)]="ticket.releaseTag"
+              name="releaseTag"
+              #releaseTagModel="ngModel"
+              class="form-input"
+              required
+            />
+            <div
+              *ngIf="releaseTagModel.invalid && releaseTagModel.touched"
+              class="error"
+            >
+              * Release Tag is required
+            </div>
+          </div>
+        </div>
+
+        <div class="formrow">
+          <div>
+            <label for="sprint">Sprint *</label> <br />
+            <input
+              id="sprint"
+              type="number"
+              [(ngModel)]="ticket.sprint"
+              name="sprint"
+              #sprintModel="ngModel"
+              class="form-input"
+              required
+            />
+            <div *ngIf="sprintModel.invalid && sprintModel.touched" class="error">
+              * Sprint is required
+            </div>
+          </div>
+
+          <div>
+            <label for="status">Status *</label> <br />
+            <p-dropdown
+              [options]="statuses"
+              [(ngModel)]="ticket.status"
+              name="status"
+              #statusModel="ngModel"
+              placeholder="Select Status"
+              class="form-dropdown"
+            ></p-dropdown>
+            <div *ngIf="!ticket.status && statusTouched" class="error">
+              * Status is required
+            </div>
+          </div>
+        </div>
+
+        <div class="formrow">
+        <div>
+          <label for="storyPoint">Story Point *</label> <br />
+          <input
+            id="storyPoint"
+            type="number"
+            [(ngModel)]="ticket.storyPoint"
+            name="storyPoint"
+            #storyPointModel="ngModel"
+            class="form-input"
+            required
+          />
+          <div
+            *ngIf="storyPointModel.invalid && storyPointModel.touched"
+            class="error"
+          >
+            * Story Point is required
+          </div>
+          <div>
+          </div>
+          </div>
+        </div>
+        <div>
+
+        </div>
+        <div class="frombuttons">
+          <button type="button" (click)="closeTicket()" class="formcancel">
+            Cancel
+          </button>
+          <button type="submit" [disabled]="ticketForm.invalid" class="formsave">
+            Save
+          </button>
+        </div>
+      </form>
+    </p-dialog>
+
+
+
+

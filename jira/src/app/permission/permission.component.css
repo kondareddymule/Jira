@@ -232,24 +232,23 @@ input[type=number]::-webkit-inner-spin-button {
 @media screen and (max-width: 320px) {
       .dashboard-expanded {
         position: static !important;
-        left: 15vw;
-        top: 15vh;
-        width: calc(100vw - 15vw) !important;
-        margin-left: 20px;
-    }
+        left: 15vw !important;
+        top: 7vh !important;
+        width: calc(100vw - 8vw) !important;
+        margin-left: 20px !important;
+      }
 
     .dashboard-collapsed {
       position: static !important;
-      left: 5vw;
-      top: 7vh;
-      width: calc(100vw - 5vw) !important;
-      margin-left: 20px;
-      padding-right: 20px;
+      left: 5vw !important;
+      top: 7vh !important;
+      width: calc(100vw - 8vw) !important;
+      margin-left: 20px !important;
     }
 
     .container {
       margin: 20px;
-      padding-right: 0px !important;
+      padding-right: 20px;
     }
 
     .page {
@@ -258,7 +257,7 @@ input[type=number]::-webkit-inner-spin-button {
       right: 20px;
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 12px;
       margin-bottom: 20px;
       z-index: 1000;
       margin-top: 10px;
@@ -331,14 +330,27 @@ input[type=number]::-webkit-inner-spin-button {
       right: 40px;
     }
 
-    .pagenumber {
-        top: 330px !important;
+    .dashboard-expanded .pagenumber {
+        top: 310px !important;
+        right: 30px !important;
+    }
+    .dashboard-collapsed .pagenumber {
+        top: 170px !important;
         right: 30px !important;
     }
 
     .table-container th,
     .table-container td {
       padding-left: 15px !important;
+    }
+    .container .dashboard-collapsed {
+      padding-right: 0px !important;
+    }
+    .dashboard-collapsed .table {
+      height: 431.5px !important;
+    }
+    .dashboard-expanded .table {
+      height: 291.5px !important;
     }
 
 }
@@ -378,7 +390,7 @@ input[type=number]::-webkit-inner-spin-button {
       margin-bottom: 10px !important;
     }
     .table {
-      height: 475px !important; 
+      height: 480.5px !important; 
     }
     button {
     height: 50px;
@@ -395,7 +407,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 
-/* @media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   .dashboard-expanded {
       position: absolute;
       left: 20vw;
@@ -423,6 +435,6 @@ input[type=number]::-webkit-inner-spin-button {
       right: 30px;
     }
 
-} */
+}
 
 

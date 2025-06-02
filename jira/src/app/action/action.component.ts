@@ -3,6 +3,8 @@ import { JiraService } from '../services/jira.service';
 import { LayoutService } from '../services/layout.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../services/auth.service';
+import { NgForm } from '@angular/forms';
+import { take } from 'rxjs/operators';
 
 
 @Component({
@@ -30,6 +32,7 @@ export class ActionComponent {
   searchTerm: string = '';
   searchTerms: string[] = [];
   currentInput: string = '';
+  addTicket: boolean = false;
   
 
   sortColumn: string = '';
@@ -49,6 +52,10 @@ export class ActionComponent {
   selected: boolean = true
 
   permissionMap: { [key: string]: boolean } = {};
+
+  addTicektPopup() {
+    this.addTicket = !this.addTicket
+  }
 
   
   toggleSelectAll(checked: boolean): void {
@@ -99,7 +106,6 @@ export class ActionComponent {
     }
   });
   }
-
 
     change() {
       this.searchIcon = !this.searchIcon;
@@ -216,19 +222,19 @@ export class ActionComponent {
 
     getButtonStyle(button: string) {
       const isActive = this.activeButton === button && this.selectedTickets.length === 1;
-       if (button === "estimateTime" ){
+       if (button === "estimateTime" ) {
         return {
           background: isActive ? '#3B82F6' : '#ffffff',
           color: isActive ? '#ffffff' : '#000000',
           cursor: this.selectedTickets.length >= 1 ? 'pointer' : 'not-allowed',
-          'box-shadow': isActive ? '0 4px 8px rgba(0, 0, 0, 0.3)' : 'none'
+          //'box-shadow': isActive ? '0 4px 8px rgba(0, 0, 0, 0.3)' : 'none'
         }
       } else {
         return {
           background: isActive ? '#3B82F6' : '#ffffff',
           color: isActive ? '#ffffff' : '#000000',
           cursor: this.selectedTickets.length === 1 ? 'pointer' : 'not-allowed',
-         'box-shadow': isActive ? '0 4px 8px rgba(0, 0, 0, 0.3)' : 'none'
+         //'box-shadow': isActive ? '0 4px 8px rgba(0, 0, 0, 0.3)' : 'none'
         }
       }
     }
@@ -467,7 +473,7 @@ export class ActionComponent {
         this.currentPage = pageNum;
         this.updatePagedTickets();
       } else {
-        this.message.add({ severity: 'error', summary: 'Error', detail: 'Page Number Does Not Exist', life: 500000 });
+        this.message.add({ severity: 'error', summary: 'Error', detail: 'Page Number Does Not Exist' });
       }
 
       this.goInputText = '';
@@ -487,6 +493,11 @@ export class ActionComponent {
         this.showpage = false;
       }
   }
+
+  // @HostListener('keydown.enter', ['$event'])
+  // handleEnter(event: KeyboardEvent) {
+  //   this.cancelBuild()
+  // }
 
   storyPointUpdate() {
     const validTickets = this.selectedTickets.filter(t => t.status?.toLowerCase() !== 'deployed');
@@ -555,6 +566,81 @@ export class ActionComponent {
       }
     }
 
+
+
+    ticket = {
+    ticketId: '',
+    assignee: '',
+    description: '',
+    estimateTime: null as number | null,
+    jiraType: '',
+    releaseTag: '',
+    sprint: null as number | null,
+    status: '',
+    storyPoint: null as number | null,
+  };
+
+  jiraTypeTouched = false;
+  statusTouched = false;
+
+  jiraTypes = [
+    { label: 'Bug', value: 'Bug' },
+    { label: 'Story', value: 'Story' },
+  ];
+
+  statuses = [
+    { label: 'Deployed', value: 'Deployed' },
+    { label: 'Inbuilt', value: 'Inbuilt' },
+  ];
+
+  @ViewChild('ticketForm')  ticketForm! : NgForm
+
+
+
+  async saveTicket(ticketForm: NgForm) {
+  if (ticketForm.invalid || !this.ticket.jiraType || !this.ticket.status) {
+    Object.values(ticketForm.controls).forEach(control => control.markAsTouched());
+    this.jiraTypeTouched = true;
+    this.statusTouched = true;
+    return;
+  }
+
+  const ticketId = this.ticket.ticketId.trim();
+
+  this.jiraService.checkIfTicketExists(ticketId).pipe(take(1)).subscribe({
+    next: async (exists: boolean) => {
+      if (exists) {
+        this.message.add({ severity: 'error', summary: 'Failed', detail: 'Ticket Id must be unique.'});
+        return;
+      }
+
+      try {
+        await this.jiraService.saveTicketToDatabase(this.ticket);
+        this.message.add({ severity: 'success', summary: 'Updated Successfully', detail: 'Ticket saved Successfully.'});
+        this.addTicket = false;
+        ticketForm.resetForm();
+        this.resetTouchedFlags();
+      } catch (err: any) {
+        this.message.add({ severity: 'error', summary: 'error', detail: 'Ticket Not Saved.'});
+      }
+    },
+    error: (err: any) => {
+      this.message.add({ severity: 'error', summary: 'error', detail: 'Ticket Not Saved.'});
+    }
+  });
+}
+
+
+  closeTicket() {
+    this.addTicket = false;
+    this.ticketForm.resetForm();
+    this.resetTouchedFlags();
+  }
+
+  private resetTouchedFlags() {
+    this.jiraTypeTouched = false;
+    this.statusTouched = false;
+  }
 
 
 }

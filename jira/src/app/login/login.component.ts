@@ -16,6 +16,11 @@ export class LoginComponent {
 
   login() {
    if (!this.email || !this.password) {
+       this.message.add({
+            severity: 'error',
+            summary: 'Fill Both Fields',
+            detail: 'Please Fill required Fileds'
+          });
     return;
   }
 
@@ -35,6 +40,11 @@ export class LoginComponent {
               }
 
               user.getIdToken().then((idToken: any) => {
+                this.message.add({
+                  severity: 'success',
+                  summary: 'Loggedin Successfully',
+                  detail: 'Login Successfully'
+                });
                 localStorage.setItem('authToken', idToken);
                 this.router.navigate(['/action']);
               });

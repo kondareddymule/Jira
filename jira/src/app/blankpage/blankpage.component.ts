@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { map, filter } from 'rxjs';
+import { map } from 'rxjs';
 
 
 @Component({

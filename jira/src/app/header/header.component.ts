@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { JiraService } from '../services/jira.service';
 
 @Component({
   selector: 'app-header',
@@ -14,13 +15,15 @@ export class HeaderComponent implements OnInit {
   userName: string = '';
   userType: string = '';
   permissionMap: any = {};
+  key: string = ""
 
 
   constructor(
     private afAuth: AngularFireAuth,
     private authService: AuthService,
     private router: Router,
-    private message: MessageService
+    private message: MessageService,
+    private jiraDelete: JiraService
   ) {}
 
   ngOnInit(): void {
@@ -35,10 +38,18 @@ export class HeaderComponent implements OnInit {
         });
       }
     });
+
+    this.jiraDelete.getSettings().subscribe((key) => {
+        if(key) {
+          this.key = key.key
+        }
+    })
   }
 
   logout() {
+    this.jiraDelete.deleteSettings(this.key).subscribe()
     this.authService.logout().subscribe(() => {
+      localStorage.clear()
       localStorage.removeItem('authToken');
       this.router.navigate(['/login']);
       this.message.add({ severity: 'success', summary: 'Logout', detail: 'Logged out successfully' });

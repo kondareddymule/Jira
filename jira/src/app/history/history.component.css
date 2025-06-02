@@ -297,22 +297,22 @@ input[type=number]::-webkit-inner-spin-button {
       .dashboard-expanded {
         position: static !important;
         left: 15vw !important;
-        top: 15vh !important;
-        width: calc(100vw - 15vw) !important;
-        margin-left: 20px;
-    }
+        top: 7vh !important;
+        width: calc(100vw - 8vw) !important;
+        margin-left: 20px !important;
+      }
 
     .dashboard-collapsed {
       position: static !important;
       left: 5vw !important;
       top: 7vh !important;
-      width: calc(100vw - 5vw) !important;
-      margin-left: 20px;
+      width: calc(100vw - 8vw) !important;
+      margin-left: 20px !important;
     }
 
     .container {
       margin: 20px;
-      padding-right: 0px !important;
+      padding-right: 20px;
     }
 
     .page {
@@ -321,7 +321,7 @@ input[type=number]::-webkit-inner-spin-button {
       right: 20px;
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 12px;
       margin-bottom: 20px;
       z-index: 1000;
       margin-top: 10px;
@@ -394,14 +394,28 @@ input[type=number]::-webkit-inner-spin-button {
       right: 40px;
     }
 
-    .pagenumber {
-        top: 330px !important;
+    .dashboard-expanded .pagenumber {
+        top: 320px !important;
+        right: 30px !important;
+    }
+    .dashboard-collapsed .pagenumber {
+        top: 180px !important;
         right: 30px !important;
     }
 
     .table-container th,
     .table-container td {
       padding-left: 15px !important;
+    }
+
+    .container .dashboard-collapsed {
+      padding-right: 0px !important;
+    }
+    .dashboard-collapsed .table {
+      height: 420px !important;
+    }
+    .dashboard-expanded .table {
+      height: 280px !important;
     }
 
 }

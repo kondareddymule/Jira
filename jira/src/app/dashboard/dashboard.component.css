@@ -42,7 +42,7 @@
 }
 
 ::ng-deep .custom-tab-padding .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link .p-menuitem-icon {
-  padding-left: 40%;
+  padding-left: 30%;
 }
 
 ::ng-deep .p-tabmenu-nav .p-menuitem-text {
@@ -51,25 +51,89 @@
 }
 
 .device {
+    display: flex;
+}
+
+.small-device {
     display: none;
 }
 
 
+@media screen and (max-width: 768px){
+    
+    .container {
+        width: 20vw;
+        height: 100vh;
+        background-color: #3498db;
+    }
+    .small-container {
+        width: 10vw;
+        height: 100vh;
+        background-color: #3498db;
+    }
+}
+@media screen and (max-width: 1024px){
+    .container {
+        width: 20vw;
+        height: 100vh;
+        background-color: #3498db;
+    }
+    .small-container {
+        width: 10vw;
+        height: 100vh;
+        background-color: #3498db;
+    }
+}
 
 @media screen and (max-width: 320px){
-    .small-device {
-        display: none;
+
+    .device {
+        display: none !important;
     }
+    .small-device {
+        display: flex !important;
+    }
+    .container {
+        width: 100vw;
+        height: 32.5vh;
+        background-color: #3498db;
+    }
+    .small-container {
+        width: 100vw;
+        height: 11vh;
+        background-color: #3498db;
+
+    }
+    
     ::ng-deep .p-tabmenu .p-tabmenu-nav {
         display: flex;
-        justify-content: center;
+        flex-direction: row;
+        border: none;
+        background: #3498db;
+    }
+
+    ::ng-deep .container .p-tabmenu .p-tabmenu-nav{
+        display: flex;
+        flex-direction: column;
         border: none;
     }
-    ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+
+    ::ng-deep .container .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
         width: 100vw;
         color: white;
-        padding: 1.25rem;
-        padding-left: 35%;
+        padding: 1rem;
+        font-weight: 700;
+        border: none;
+        background-color: #3498db;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+
+
+    ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+        width: 25vw;
+        color: white;
+        padding: 1rem;
         font-weight: 700;
         border: none;
         background-color: #3498db;
@@ -79,30 +143,21 @@
     .device {
         display: flex;
     }
-}
+    .rightArrow {
+        display: flex;
+        justify-content: flex-end;
+        height: 25px;
+        width: 100vw;
+        margin-bottom: 2px !important;
+    }
+    ::ng-deep .container .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+        padding-left: 30% !important;
+    }
 
-@media screen and (max-width: 768px){
-    .container {
-        width: 20vw;
-        height: 100vh;
-        background-color: #3498db;
-    }
-    .small-container {
-        width: 10vw;
-        height: 100vh;
-        background-color: #3498db;
+    ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+        background-color: #ced4da;
+        border: none;
+        color: white;
     }
 }
-/* @media screen and (max-width: 1024px){
-    .container {
-        width: 20vw;
-        height: 100vh;
-        background-color: #3498db;
-    }
-    .small-container {
-        width: 10vw;
-        height: 100vh;
-        background-color: #3498db;
-    }
-} */
 

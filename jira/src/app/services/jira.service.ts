@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map, catchError } from 'rxjs/operators';
-import { of, forkJoin, from } from 'rxjs';
+import { of, forkJoin, from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class JiraService {
@@ -154,6 +154,27 @@ export class JiraService {
     } else {
       return this.db.list('Settings').push(settings);
     }
+  }
+
+  deleteSettings(key: string): Observable<void> {
+    return from(this.db.object(`Settings/${key}`).remove());
+  }
+
+
+
+  saveTicketToDatabase(ticket: any) {
+    return this.db.object(`JiraTickets/${ticket.ticketId}`).set(ticket);
+  }
+
+  checkIfTicketExists(ticketId: string) {
+    return this.db.object(`JiraTickets/${ticketId}`).valueChanges().pipe(
+      map(data => {
+        return !!data;
+      }),
+      catchError(error => {
+        return of(false);
+      })
+    );
   }
 
 }

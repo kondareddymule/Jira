@@ -15,6 +15,22 @@ body {
     body {
         overflow: auto !important;
     }
+
+    .dashboard-expanded {
+      position: absolute;
+      top: 15vh;
+      height: calc(100vw - 15vw);
+      margin-left: 20px;
+      width: 100vw;
+    }
+
+  .dashboard-collapsed {
+    position: absolute;
+    top: 5vw;
+    height: calc(100vw - 5vw);
+    margin-left: 20px;
+    width: 100vw;
+  }
 }
 
 .dashboard-expanded {
@@ -32,3 +48,4 @@ body {
   width: calc(100vw - 5vw);
   margin-left: 20px;
 }
+

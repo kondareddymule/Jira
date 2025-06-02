@@ -11,7 +11,7 @@ export class SettingComponent implements OnInit {
   sidebarVisible: boolean = true;
 
   authorizationToken = localStorage.getItem('authToken') || '';
-  baseUrl: string = '';
+  baseUrl: string = 'https://fir-84010-default-rtdb.firebaseio.com/';
   isEditMode: boolean = false;
   isDataAvailable: boolean = false;
   docKey: string = '';
@@ -29,12 +29,11 @@ export class SettingComponent implements OnInit {
       this.jiraService.getSettings().subscribe(data => {
       if (data && (data.authorizationToken || data.baseUrl)) {
         this.authorizationToken = data.authorizationToken ? data.authorizationToken : this.authorizationToken;
-        this.baseUrl = data.baseUrl;
+        this.baseUrl = data.baseUrl
         this.docKey = data.key;
         this.isDataAvailable = true;
         this.isEditMode = false;
       } else {
-        this.baseUrl = '';
         this.docKey = '';
         this.isDataAvailable = false;
         this.isEditMode = true;

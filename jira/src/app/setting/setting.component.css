@@ -53,23 +53,23 @@ button {
 @media screen and (max-width: 320px) {
       .dashboard-expanded {
         position: static !important;
-        left: 15vw;
-        top: 15vh;
-        width: calc(100vw - 15vw) !important;
-        margin-left: 20px;
-    }
+        left: 15vw !important;
+        top: 7vh !important;
+        width: calc(100vw - 8vw) !important;
+        margin-left: 20px !important;
+      }
 
     .dashboard-collapsed {
       position: static !important;
-      left: 5vw;
-      top: 7vh;
-      width: calc(100vw - 5vw) !important;
-      margin-left: 20px;
+      left: 5vw !important;
+      top: 7vh !important;
+      width: calc(100vw - 8vw) !important;
+      margin-left: 20px !important;
     }
 
     .container {
       margin: 20px;
-      padding-right: 0px !important;
+      padding-right: 20px;
     }
     .page {
       position: absolute;
@@ -77,11 +77,11 @@ button {
       right: 20px !important;
       display: flex;
       align-items: center;
-      gap: 11px;
-      margin-bottom: 20px;
+      gap: 30px !important;
+      margin-bottom: 5px !important;
       z-index: 1000;
       margin-top: 10px;
-      padding-right: 15px;
+      padding-right: 0px !important;
     }
 
     .cancel {
@@ -111,6 +111,7 @@ button {
     }
 }
 
+
 @media screen and (max-width: 768px) {
   .dashboard-expanded {
       position: absolute;
@@ -136,6 +137,36 @@ button {
       gap: 10px;
       margin-bottom: 30px;
       z-index: 1000;
+    }
+
+}
+
+@media screen and (max-width: 1024px) {
+  .dashboard-expanded {
+      position: absolute;
+      left: 20vw;
+      top: 7vh;
+      width: calc(100vw - 23vw);
+      margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: absolute;
+      left: 10vw;
+      top: 7vh;
+      width: calc(100vw - 13vw);
+      margin-left: 20px;
+    }
+    .container {
+      margin: 20px;
+      padding-right: 20px;
+    }
+
+    .table {
+        height: 680px; 
+    }
+    .page {
+      right: 30px;
     }
 
 }

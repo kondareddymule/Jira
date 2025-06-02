@@ -36,12 +36,12 @@ export class RegisterComponent {
     this.authService.register(email, password, name).subscribe(
       () => {
         this.message.add({ severity: 'success', summary: 'Success', detail: 'User Registered successfully' });
+        this.authService.logout();
         form.reset();
         this.router.navigate(['/login']);
       },
       err => {
-        this.message.add({ severity: 'error', summary: 'Registration failed', detail: err.message});
-        console.error('Registration error', err);
+        this.message.add({ severity: 'error', summary: 'Registration failed', detail: "Email Already Exists"});
       }
     );
 
@@ -51,7 +51,7 @@ export class RegisterComponent {
   this.passwordsDoNotMatch = this.user.password !== this.user.confirmPassword;
 }
 
-  goTOLogin() {
+  goToLogin() {
     this.router.navigate(['/login'])
   }
 }

@@ -1,14 +1,15 @@
-<div [ngClass]="visible ? 'container' : 'small-container'" class="small-device">
-    <div class="rightArrow">
+<div [ngClass]="visible ? 'container' : 'small-container'">
+    <div class="rightArrow device">
         <i class="pi" [ngClass]="visible ? 'pi-angle-left' : 'pi-angle-right'" 
+           style="display: flex; align-items: center; background-color: white; border-radius: 50%; margin-top: 10px; cursor: pointer; margin-right: 10px;" 
+           (click)="toggleMenu()"></i>
+    </div>
+    <div class="rightArrow small-device">
+        <i class="pi" [ngClass]="visible ? 'pi-angle-up' : 'pi-angle-down'" 
            style="display: flex; align-items: center; background-color: white; border-radius: 50%; margin-top: 10px; cursor: pointer; margin-right: 10px;" 
            (click)="toggleMenu()"></i>
     </div>
     <div class="card" [ngClass]="{ 'custom-tab-padding': !visible }">
         <p-tabMenu [model]="visible ? items : item"></p-tabMenu>
     </div>
-</div>
-
-<div class="card" [ngClass]="{ 'custom-tab-padding': !visible }" class="device">
-    <p-tabMenu [model]="visible ? items : items"></p-tabMenu>
 </div>
