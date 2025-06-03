@@ -3,7 +3,7 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
-html body { margin: 0 }
+html body { margin: 0; font-weight: 300; color: #393232cd;}
 
 body {
     background-color: #ecf0f1;

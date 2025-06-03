@@ -155,7 +155,7 @@
     .row {
         display: flex;
         flex-direction: row;
-        gap: 135px;
+        gap: 10px;
     }
 
 }
