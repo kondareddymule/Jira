@@ -113,9 +113,9 @@ export class ActionComponent {
 
 
   addSearchTerm(): void {
-    const cleaned = this.currentInput.trim();
-    if (cleaned && !this.searchTerms.includes(cleaned)) {
-      this.searchTerms.push(cleaned);
+    const word = this.currentInput.trim();
+    if (word && !this.searchTerms.includes(word)) {
+      this.searchTerms.push(word);
       this.currentInput = '';
       this.filterTickets();
     }
@@ -184,6 +184,7 @@ export class ActionComponent {
           );
 
           this.filteredTickets = ticketsToFilter;
+          this.currentPage = 1;
           this.sortTickets();
           this.updatePagedTickets();
         }
@@ -383,6 +384,7 @@ export class ActionComponent {
         ticketId: ticket.ticketId,
         estimateTime: ticket.estimateTime
       }));
+      console.log(editableTickets)
     }
 
 
@@ -393,6 +395,7 @@ export class ActionComponent {
     }
 
     saveEstimateEdit(): void {
+      console.log(this.editedTickets)
       this.jiraService.updateEstimateTimes(this.editedTickets).subscribe({
         next: () => {
           this.editingEstimateTime = false;
@@ -414,7 +417,8 @@ export class ActionComponent {
 
       getEditedTicket(ticketId: string): any {
         return this.editedTickets.find(t => t.ticketId === ticketId);
-    }
+      }
+
 
     cancelBuild() {
       this.updateBuild = false

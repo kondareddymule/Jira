@@ -4,7 +4,7 @@
 <div [ngClass]="sidebarVisible ? 'dashboard-expanded' : 'dashboard-collapsed'" class="container">
   <div class="settings-container">
     <div>
-      <label style="font-weight: bold;">Authorization Token</label><br>
+      <label style="font-weight: 500; color: black;">Authorization Token</label><br>
       <input
         type="text"
         [(ngModel)]="authorizationToken"
@@ -16,7 +16,7 @@
     </div>
 
     <div>
-      <label style="font-weight: bold;">Base URL</label> <br>
+      <label style="font-weight: 500; color: black;">Base URL</label> <br>
       <input
         type="text"
         [(ngModel)]="baseUrl"

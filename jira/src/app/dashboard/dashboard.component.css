@@ -28,7 +28,7 @@
 }
 
 ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
-    background-color: #ced4da;
+    background-color: #5cace2;
     border: none;
     color: white;
 }
@@ -47,7 +47,8 @@
 
 ::ng-deep .p-tabmenu-nav .p-menuitem-text {
     white-space: wrap !important;
-    font-size: 14px !important;
+    font-size: 12px !important;
+    font-weight: 500;
 }
 
 .device {
@@ -82,6 +83,165 @@
         width: 10vw;
         height: 100vh;
         background-color: #3498db;
+    }
+}
+
+
+@media screen and (max-width: 426px){
+
+    .device {
+        display: none !important;
+    }
+    .small-device {
+        display: flex !important;
+    }
+    .container {
+        width: 100vw;
+        height: 32.5vh;
+        background-color: #3498db;
+    }
+    .small-container {
+        width: 100vw;
+        height: 11vh;
+        background-color: #3498db;
+
+    }
+    
+    ::ng-deep .p-tabmenu .p-tabmenu-nav {
+        display: flex;
+        flex-direction: row;
+        border: none;
+        background: #3498db;
+    }
+
+    ::ng-deep .container .p-tabmenu .p-tabmenu-nav{
+        display: flex;
+        flex-direction: column;
+        border: none;
+    }
+
+    ::ng-deep .container .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+        width: 100vw;
+        color: white;
+        padding: 1rem;
+        font-weight: 700;
+        border: none;
+        background-color: #3498db;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+
+
+    ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+        width: 25vw;
+        color: white;
+        padding: 1rem;
+        font-weight: 700;
+        border: none;
+        background-color: #3498db;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+    .device {
+        display: flex;
+    }
+    .rightArrow {
+        display: flex;
+        justify-content: flex-end;
+        height: 25px;
+        width: 100vw;
+        margin-bottom: 2px !important;
+    }
+    ::ng-deep .container .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+        padding-left: 30% !important;
+    }
+
+    ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+        background-color: #5cace2;
+        border: none;
+        color: white;
+    }
+    ::ng-deep .p-toast {
+      width: 280px !important;
+    }
+}
+
+@media screen and (max-width: 376px){
+
+    .device {
+        display: none !important;
+    }
+    .small-device {
+        display: flex !important;
+    }
+    .container {
+        width: 100vw;
+        height: 32.5vh;
+        background-color: #3498db;
+    }
+    .small-container {
+        width: 100vw;
+        height: 11vh;
+        background-color: #3498db;
+
+    }
+    
+    ::ng-deep .p-tabmenu .p-tabmenu-nav {
+        display: flex;
+        flex-direction: row;
+        border: none;
+        background: #3498db;
+    }
+
+    ::ng-deep .container .p-tabmenu .p-tabmenu-nav{
+        display: flex;
+        flex-direction: column;
+        border: none;
+    }
+
+    ::ng-deep .container .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+        width: 100vw;
+        color: white;
+        padding: 1rem;
+        font-weight: 700;
+        border: none;
+        background-color: #3498db;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+
+
+    ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+        width: 25vw;
+        color: white;
+        padding: 1rem;
+        font-weight: 700;
+        border: none;
+        background-color: #3498db;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+    .device {
+        display: flex;
+    }
+    .rightArrow {
+        display: flex;
+        justify-content: flex-end;
+        height: 25px;
+        width: 100vw;
+        margin-bottom: 2px !important;
+    }
+    ::ng-deep .container .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+        padding-left: 30% !important;
+    }
+
+    ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+        background-color: #5cace2;
+        border: none;
+        color: white;
+    }
+    ::ng-deep .p-toast {
+      width: 280px !important;
     }
 }
 
@@ -155,9 +315,13 @@
     }
 
     ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
-        background-color: #ced4da;
+        background-color: #5cace2;
         border: none;
         color: white;
     }
+    ::ng-deep .p-toast {
+      width: 280px !important;
+    }
 }
+
 

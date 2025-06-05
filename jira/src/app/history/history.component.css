@@ -12,7 +12,7 @@
 }
 
 .table {
-  height: 500px;
+  height: 550px;
   overflow: auto;
   border: 1px solid #e0e0e0;
   border-radius: 20px 20px 0 0;
@@ -293,7 +293,97 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 
-@media screen and (max-width: 320px) {
+
+
+@media screen and (max-width: 1024px) {
+  .dashboard-expanded {
+      position: absolute;
+      left: 20vw;
+      top: 7vh;
+      width: calc(100vw - 23vw);
+      margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: absolute;
+      left: 10vw;
+      top: 7vh;
+      width: calc(100vw - 13vw);
+      margin-left: 20px;
+    }
+    .container {
+      margin: 20px;
+      padding-right: 20px;
+    }
+
+    .table {
+        height: 480px !important; 
+    }
+    .page {
+      right: 30px;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard-expanded {
+      position: absolute;
+      left: 20vw;
+      top: 7vh;
+      width: calc(100vw - 23vw);
+      margin-left: 20px;
+    }
+
+    .dashboard-collapsed {
+      position: absolute;
+      left: 10vw;
+      top: 7vh;
+      width: calc(100vw - 13vw);
+      margin-left: 20px;
+    }
+
+    .container {
+      margin: 20px;
+      padding-right: 20px;
+    }
+
+    .buttons {
+      position: static !important;
+      gap: 10px !important;
+    }
+
+    .page {
+      position: static !important;
+      display: flex;
+      right: 20px !important;
+      justify-content: flex-end; 
+      margin-top: 10px;
+      margin-bottom: 10px !important;
+    }
+    .table {
+      height: 475px !important; 
+    }
+    button {
+    height: 50px;
+    font-size: 10px !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 136px;
+    background-color: #3B82F6;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .table-container th,
+    .table-container td {
+      padding-left: 45px;
+    }
+
+}
+
+
+@media screen and (max-width: 426px) {
       .dashboard-expanded {
         position: static !important;
         left: 15vw !important;
@@ -312,7 +402,7 @@ input[type=number]::-webkit-inner-spin-button {
 
     .container {
       margin: 20px;
-      padding-right: 20px;
+      padding-right: 7px !important;
     }
 
     .page {
@@ -417,93 +507,268 @@ input[type=number]::-webkit-inner-spin-button {
     .dashboard-expanded .table {
       height: 280px !important;
     }
-
-}
-
-@media screen and (max-width: 768px) {
-  .dashboard-expanded {
-      position: absolute;
-      left: 20vw;
-      top: 7vh;
-      width: calc(100vw - 23vw);
-      margin-left: 20px;
+    ::ng-deep .p-toast {
+      width: 280px !important;
     }
 
+}
+@media screen and (max-width: 376px) {
+      .dashboard-expanded {
+        position: static !important;
+        left: 15vw !important;
+        top: 7vh !important;
+        width: calc(100vw - 8vw) !important;
+        margin-left: 20px !important;
+      }
+
     .dashboard-collapsed {
-      position: absolute;
-      left: 10vw;
-      top: 7vh;
-      width: calc(100vw - 13vw);
-      margin-left: 20px;
+      position: static !important;
+      left: 5vw !important;
+      top: 7vh !important;
+      width: calc(100vw - 8vw) !important;
+      margin-left: 20px !important;
     }
 
     .container {
       margin: 20px;
-      padding-right: 20px;
-    }
-
-    .buttons {
-      position: static !important;
-      gap: 10px !important;
+      padding-right: 12px !important;
     }
 
     .page {
-      position: static !important;
+      position: static;
+      bottom: 0;
+      right: 20px;
       display: flex;
-      right: 20px !important;
-      justify-content: flex-end; 
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      z-index: 1000;
       margin-top: 10px;
-      margin-bottom: 10px !important;
     }
-    .table {
-      height: 475px !important; 
-    }
-    button {
-    height: 50px;
-    font-size: 10px !important;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    width: 136px;
-    background-color: #3B82F6;
-    color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
 
-  .table-container th,
+    button {
+      height: 50px;
+      font-size: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 130px;
+      background-color: #3B82F6;
+      color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .buttons {
+      position: static;
+      bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 11px;
+      z-index: 1000;
+    }
+
+    ::ng-deep .p-paginator .p-paginator-prev {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+    }
+
+    ::ng-deep .p-paginator .p-paginator-next {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+        border-radius: 50%;
+    }
+
+    ::ng-deep .p-paginator .p-paginator-last {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+        border-radius: 50%;
+    }
+    ::ng-deep .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+        border-radius: 50%;
+    }
+
+    .searchticket {
+      font-size: 1rem;
+      cursor: pointer;
+      position: absolute;
+      top: 294px;
+      right: 40px;
+    }
+
+    .dashboard-expanded .pagenumber {
+        top: 320px !important;
+        right: 30px !important;
+    }
+    .dashboard-collapsed .pagenumber {
+        top: 180px !important;
+        right: 30px !important;
+    }
+
+    .table-container th,
     .table-container td {
-      padding-left: 45px;
+      padding-left: 15px !important;
+    }
+
+    .container .dashboard-collapsed {
+      padding-right: 0px !important;
+    }
+    .dashboard-collapsed .table {
+      height: 420px !important;
+    }
+    .dashboard-expanded .table {
+      height: 280px !important;
+    }
+    ::ng-deep .p-toast {
+      width: 280px !important;
     }
 
 }
 
 
-@media screen and (max-width: 1024px) {
-  .dashboard-expanded {
-      position: absolute;
-      left: 20vw;
-      top: 7vh;
-      width: calc(100vw - 23vw);
-      margin-left: 20px;
-    }
+@media screen and (max-width: 320px) {
+      .dashboard-expanded {
+        position: static !important;
+        left: 15vw !important;
+        top: 7vh !important;
+        width: calc(100vw - 8vw) !important;
+        margin-left: 20px !important;
+      }
 
     .dashboard-collapsed {
-      position: absolute;
-      left: 10vw;
-      top: 7vh;
-      width: calc(100vw - 13vw);
-      margin-left: 20px;
-    }
-    .container {
-      margin: 20px;
-      padding-right: 20px;
+      position: static !important;
+      left: 5vw !important;
+      top: 7vh !important;
+      width: calc(100vw - 8vw) !important;
+      margin-left: 20px !important;
     }
 
-    .table {
-        height: 680px; 
+    .container {
+      margin: 20px;
+      padding-right: 15px !important;
     }
+
     .page {
-      right: 30px;
+      position: static;
+      bottom: 0;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      z-index: 1000;
+      margin-top: 10px;
+    }
+
+    button {
+      height: 50px;
+      font-size: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 130px;
+      background-color: #3B82F6;
+      color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .buttons {
+      position: static;
+      bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 11px;
+      z-index: 1000;
+    }
+
+    ::ng-deep .p-paginator .p-paginator-prev {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+    }
+
+    ::ng-deep .p-paginator .p-paginator-next {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+        border-radius: 50%;
+    }
+
+    ::ng-deep .p-paginator .p-paginator-last {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+        border-radius: 50%;
+    }
+    ::ng-deep .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last {
+        border: 0 none;
+        color: #000000;
+        min-width: 1rem;
+        height: 2rem;
+        margin: 0.1rem;
+        transition: box-shadow 0.2s;
+        border-radius: 50%;
+    }
+
+    .searchticket {
+      font-size: 1rem;
+      cursor: pointer;
+      position: absolute;
+      top: 294px;
+      right: 40px;
+    }
+
+    .dashboard-expanded .pagenumber {
+        top: 320px !important;
+        right: 30px !important;
+    }
+    .dashboard-collapsed .pagenumber {
+        top: 180px !important;
+        right: 30px !important;
+    }
+
+    .table-container th,
+    .table-container td {
+      padding-left: 15px !important;
+    }
+
+    .container .dashboard-collapsed {
+      padding-right: 0px !important;
+    }
+    .dashboard-collapsed .table {
+      height: 420px !important;
+    }
+    .dashboard-expanded .table {
+      height: 280px !important;
+    }
+    ::ng-deep .p-toast {
+      width: 280px !important;
     }
 
 }

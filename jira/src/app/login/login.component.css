@@ -73,7 +73,11 @@ input.ng-invalid.ng-touched {
     margin: auto;
 }
 
-@media screen and (max-width: 320px) {
+.signIn {
+    font-weight: 700;
+}
+
+@media screen and (max-width: 426px) {
     .outer-container {
         margin: 20px !important;
     }
@@ -126,6 +130,9 @@ input.ng-invalid.ng-touched {
     }
     .forgotpassword {
         margin-top: 10px !important;
+    }
+    ::ng-deep .p-toast {
+      width: 280px !important;
     }
     
 }

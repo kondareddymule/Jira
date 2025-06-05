@@ -32,68 +32,6 @@
     }
 
 
-@media screen and (max-width: 320px) {
-    .outer-container {
-        margin: 20px !important;
-    }
-    .container {
-        display: flex;
-        flex-direction: column;
-        border-radius: 6px;
-        height: auto !important;
-    }
-    .left-contianer {
-        height: auto !important;
-        width: auto !important;
-        text-align: center;
-    }
-    .image {
-        height: 100% !important;
-        width: 100% !important;
-        border-radius: 6px;
-    }
-    .right-container {
-        height: auto !important;
-        width: auto !important;
-        margin: 10px !important;
-        
-    }
-    .heading {
-        font-size: 14px;
-        margin: 5px
-    }
-    .para {
-        font-size: 12px;
-        margin: 5px
-    }
-    .label {
-        text-align: left;
-    }
-    .createButton {
-        margin-right: 0px;
-    }
-
-    .forgot {
-        display: flex;
-        flex-direction: column;
-    }
-    ::ng-deep .p-inputtext {
-        width: 100% !important;
-    }
-    ::ng-deep .p-button {
-     width: 100% !important;
-    }
-    .forgotpassword {
-        margin-top: 10px !important;
-    }
-    .row {
-    display: block !important;
-    flex-direction: column !important; 
-    gap: 0px !important;
-    }
-
-    
-}
 
 @media screen and (max-width: 768px) {
     .container {
@@ -156,6 +94,73 @@
         display: flex;
         flex-direction: row;
         gap: 10px;
+        justify-content: space-between;
     }
 
+}
+
+@media screen and (max-width: 426px) {
+    .outer-container {
+        margin: 20px !important;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        border-radius: 6px;
+        height: auto !important;
+    }
+    .left-contianer {
+        height: auto !important;
+        width: auto !important;
+        text-align: center;
+    }
+    .image {
+        height: 100% !important;
+        width: 100% !important;
+        border-radius: 6px;
+    }
+    .right-container {
+        height: auto !important;
+        width: auto !important;
+        margin: 10px !important;
+        
+    }
+    .heading {
+        font-size: 14px;
+        margin: 5px
+    }
+    .para {
+        font-size: 12px;
+        margin: 5px
+    }
+    .label {
+        text-align: left;
+    }
+    .createButton {
+        margin-right: 0px;
+    }
+
+    .forgot {
+        display: flex;
+        flex-direction: column;
+    }
+    ::ng-deep .p-inputtext {
+        width: 100% !important;
+    }
+    ::ng-deep .p-button {
+     width: 100% !important;
+    }
+    .forgotpassword {
+        margin-top: 10px !important;
+    }
+    .row {
+    display: block !important;
+    flex-direction: column !important;
+    gap: 0px !important;
+    }
+    ::ng-deep .p-toast {
+      width: 280px !important;
+    }
+
+    
 }
