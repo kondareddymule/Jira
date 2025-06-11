@@ -87,6 +87,9 @@
                 </tr>
             </thead>
             <tbody>
+                <tr *ngIf="pagedTickets.length === 0">
+                    <td colspan="3" style="text-align: center; color: red; font-weight: bold;">No tickets to show</td>
+                </tr>
                 <tr *ngFor="let ticket of pagedTickets">
                     <td>{{ticket.sequence}}</td>
                     <td>{{ticket.timestamp | date}}</td>
@@ -96,7 +99,7 @@
         </table>
     </div>
     </div>
-    <div class="page">
+    <div class="page" *ngIf="pagedTickets.length > 0">
             <div>
                 <p-paginator
                     #paginator

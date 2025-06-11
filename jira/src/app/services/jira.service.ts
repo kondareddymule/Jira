@@ -66,7 +66,7 @@ export class JiraService {
 
 
     updateBuildStatus(tickets: any[], buildSequence: string, utcDateTime: string) {
-      console.log(tickets)
+      //console.log(tickets)
       const updates = tickets.map(ticket => {
         const newStatus = ticket.jiraType?.toLowerCase() === 'bug' ? 'Inbuilt' : 'Deployed';
         const updateType = ticket.jiraType?.toLowerCase() === "bug" ? 'Bug' : 'Story';

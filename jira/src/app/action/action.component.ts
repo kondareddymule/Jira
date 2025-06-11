@@ -602,12 +602,12 @@ export class ActionComponent {
 
 
   async saveTicket(ticketForm: NgForm) {
-  if (ticketForm.invalid || !this.ticket.jiraType || !this.ticket.status) {
-    Object.values(ticketForm.controls).forEach(control => control.markAsTouched());
-    this.jiraTypeTouched = true;
-    this.statusTouched = true;
-    return;
-  }
+    if (ticketForm.invalid || !this.ticket.jiraType || !this.ticket.status) {
+      Object.values(ticketForm.controls).forEach(control => control.markAsTouched());
+      this.jiraTypeTouched = true;
+      this.statusTouched = true;
+      return;
+    }
 
   const ticketId = this.ticket.ticketId.trim();
 

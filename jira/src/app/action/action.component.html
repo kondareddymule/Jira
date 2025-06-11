@@ -344,9 +344,9 @@
                 </tr>
 
             </tbody>
-          </table>
+        </table>
     </div>
-    <div class="page" *ngIf="!editingEstimateTime">
+    <div class="page" *ngIf="!editingEstimateTime && pagedTickets.length > 0">
             <div>
                 <p-paginator
                     #paginator
@@ -360,7 +360,7 @@
             <input type="number" class="goInput" [(ngModel)]="goInputText"/>
             <button class="goButton" (click)="gotoPage()">Go</button>
         </div>
-    <div style="display: flex;"z>
+    <div style="display: flex;" *ngIf="pagedTickets.length > 0">
     <div class="buttons">
 
             <button
